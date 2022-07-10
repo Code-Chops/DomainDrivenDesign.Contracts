@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
+namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Converters;
 
 internal class PolymorphicJsonConverter : JsonConverter<IPolymorphicContract>
 {

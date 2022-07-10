@@ -1,8 +1,7 @@
 ﻿using System.Text.Json;
-using CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Converters;
 using CodeChops.DomainDrivenDesign.DomainModeling;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
+namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Converters;
 
 public class PolymorphicConverter
 {
