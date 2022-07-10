@@ -8,18 +8,19 @@ namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism.Converte
 public class NumberConversionTests
 {
 	private static Number<int> NumberInt { get; } = new(7);
-	private const string ExpectedNumberIntJson = @"{""Value"":7}";
+	private const string NumberIntJson = @"{""Value"":7}";
 	private static Number<double> NumberDouble { get; } = new(3.12);
-	private const string ExpectedNumberDoubleJson = @"{""Value"":3.12}";
-    
+	private const string NumberDoubleJson = @"{""Value"":3.12}";
+
+	private static NumberWrapperMock NumberWrapper { get; } = new(NumberInt, NumberDouble);
+	private const string NumberWrapperJson = @"{""IntNumber"":{""Value"":7},""DoubleNumber"":{""Value"":3.12}}";
 	private static JsonSerializerOptions JsonSerializerOptions { get; } = new() { WriteIndented = false };
-	// private static List<PolymorphicContract> Contracts { get; } = PointMock.Implementations.GetValues().Select(value => (PolymorphicContract)value).ToList();
 	private static PolymorphicConverter PolymorphicConverter { get; } = new(JsonSerializerOptions, new List<PolymorphicAdapter>(), new List<IPolymorphicContract>());
     
 	[Fact]
 	public void Deserialization_NumberInt_Is_Correct()
 	{
-		var number = PolymorphicConverter.Deserialize<Number<int>>(ExpectedNumberIntJson);
+		var number = PolymorphicConverter.Deserialize<Number<int>>(NumberIntJson);
 
 		Assert.Equal(typeof(Number<int>), number.GetType());
 		Assert.Equal(NumberInt.Value, number.Value);
@@ -30,13 +31,13 @@ public class NumberConversionTests
 	{
 		var json = PolymorphicConverter.Serialize(NumberInt);
         
-		Assert.Equal(ExpectedNumberIntJson, json);
+		Assert.Equal(NumberIntJson, json);
 	}
 	
 	[Fact]
 	public void Deserialization_NumberDouble_Is_Correct()
 	{
-		var number = PolymorphicConverter.Deserialize<Number<double>>(ExpectedNumberDoubleJson);
+		var number = PolymorphicConverter.Deserialize<Number<double>>(NumberDoubleJson);
 
 		Assert.Equal(typeof(Number<double>), number.GetType());
 		Assert.Equal(NumberDouble.Value, number.Value);
@@ -47,6 +48,24 @@ public class NumberConversionTests
 	{
 		var json = PolymorphicConverter.Serialize(NumberDouble);
         
-		Assert.Equal(ExpectedNumberDoubleJson, json);
+		Assert.Equal(NumberDoubleJson, json);
+	}
+	
+	[Fact]
+	public void Deserialization_NumberWrapper_Is_Correct()
+	{
+		var numberWrapper = PolymorphicConverter.Deserialize<NumberWrapperMock>(NumberWrapperJson);
+
+		Assert.Equal(typeof(NumberWrapperMock), numberWrapper.GetType());
+		Assert.Equal(NumberDouble.Value, numberWrapper.DoubleNumber.Value);
+		Assert.Equal(NumberInt.Value, numberWrapper.IntNumber.Value);	
+	}
+	
+	[Fact]
+	public void Serialization_NumberWrapper_Is_Correct()
+	{
+		var json = PolymorphicConverter.Serialize(NumberWrapper);
+        
+		Assert.Equal(NumberWrapperJson, json);
 	}
 }
