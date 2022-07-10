@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <Title>CodeChops.DomainDrivenDesign.Contracts.UnitTests</Title>
+        <Version>1.0.0</Version>
+        <AssemblyName>CodeChops.DomainDrivenDesign.Contracts.UnitTests</AssemblyName>
+        <RootNamespace>CodeChops.DomainDrivenDesign.Contracts.UnitTests</RootNamespace>
+        <Authors>Max Bergman (@Code-Chops)</Authors>
+        <Company>CodeChops</Company>
+        <Summary>Unit tests for contracts</Summary>
+        <Description>Unit tests for contracts</Description>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>10</LangVersion>
+        <AnalysisLevel>latest</AnalysisLevel>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <EnablePreviewFeatures>true</EnablePreviewFeatures>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    </PropertyGroup>
+
+    <!-- Removes local nuget packages, so the package will be replaced when it exists -->
+    <Target Name="RemoveNugetPackage" AfterTargets="Pack" Condition="'$(LocalNuGetPackagesFolder)' != null">
+        <Exec Command="rmdir $(LocalNuGetPackagesFolder)\$(PackageId)\$(PackageVersion)\ /s /q" />
+    </Target>
+    <!-- Creates local nuget packages if environment variable LocalNuGetPackagesFolder is configured -->
+    <Target Name="AddNugetPackage" AfterTargets="Pack" Condition="'$(LocalNuGetPackagesFolder)' != null">
+        <Exec Command="$(LocalNuGetPackagesFolder)\nuget.exe add $(OutputPath)..\$(PackageId).$(PackageVersion).nupkg -source $(LocalNuGetPackagesFolder)" />
+    </Target>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+        <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.2.0" />
+        <PackageReference Include="xunit" Version="2.4.1" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="coverlet.collector" Version="3.1.2">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+
+	<ItemGroup>
+        <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.6.6" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Contracts\DomainDrivenDesign.Contracts.csproj" />
+	</ItemGroup>
+
+	<PropertyGroup>
+        <!-- CA1822: Instance member does not access instance data and can be marked as static -->
+        <!-- CS1573: Undocumented public symbol while -doc compiler option is used -->
+        <!-- CS1591: Missing XML comment for publicly visible type -->
+        <!-- CA1816: Dispose() should call GC.SuppressFinalize()-->
+        <NoWarn>CA1822,CS1573,CS1591,CA1816</NoWarn>
+    </PropertyGroup>
+</Project>

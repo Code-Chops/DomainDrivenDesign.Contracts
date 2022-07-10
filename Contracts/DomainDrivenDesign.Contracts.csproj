@@ -1,0 +1,82 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <VersionPrefix>0.1.0</VersionPrefix>
+        <PackageReleaseNotes>Fixed polymorphism.</PackageReleaseNotes>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>10</LangVersion>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Title>CodeChops.DomainDrivenDesign.Contracts</Title>
+        <AssemblyName>CodeChops.DomainDrivenDesign.Contracts</AssemblyName>
+        <RootNamespace>CodeChops.DomainDrivenDesign.Contracts</RootNamespace>
+        <PackageId>CodeChops.DomainDrivenDesign.Contracts</PackageId>
+        <Authors>CodeChops (@Code-Chops), Max Bergman</Authors>
+        <Company>CodeChops</Company>
+        <PackageProjectUrl>https://github.com/code-chops/DomainDrivenDesign.Contracts</PackageProjectUrl>
+        <PackageTags>CodeChops;CodeChops.DomainDrivenDesign.Contracts;DomainDrivenDesign.Contracts;Contracts;</PackageTags>
+        <RepositoryUrl>https://github.com/code-chops/DomainDrivenDesign.Contracts</RepositoryUrl>
+        <RepositoryType>Git</RepositoryType>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <PackageIcon>icon.png</PackageIcon>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <Copyright>Copyright (c) CodeChops 2022</Copyright>
+        <Description>
+            Easy use of contracts, adapters and polymorphism, using JSON. 
+        </Description>
+        <AnalysisLevel>latest</AnalysisLevel>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <EnablePreviewFeatures>true</EnablePreviewFeatures>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    </PropertyGroup>
+    
+    <!-- Removes local nuget packages, so the package will be replaced when it exists -->
+    <Target Name="RemoveNugetPackage" AfterTargets="Pack" Condition="'$(LocalNuGetPackagesFolder)' != null">
+        <Exec Command="rmdir $(LocalNuGetPackagesFolder)\$(PackageId)\$(PackageVersion)\ /s /q" />
+    </Target>
+    <!-- Creates local nuget packages if environment variable LocalNuGetPackagesFolder is configured -->
+    <Target Name="AddNugetPackage" AfterTargets="Pack" Condition="'$(LocalNuGetPackagesFolder)' != null">
+        <Exec Command="$(LocalNuGetPackagesFolder)\nuget.exe add $(OutputPath)..\$(PackageId).$(PackageVersion).nupkg -source $(LocalNuGetPackagesFolder)" />
+    </Target>
+
+    <ItemGroup>
+        <None Include="Properties\LICENSE" Pack="true" PackagePath="" />
+        <None Include="Properties\icon.png" Pack="true" Visible="true" PackagePath="" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="$(AssemblyName).UnitTests" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Codechops.DomainDrivenDesign.Domainmodeling" Version="0.0.4" />
+      <PackageReference Include="CodeChops.GenericMath" Version="1.3.4" />
+      <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.6.6" />
+    </ItemGroup>
+
+    <PropertyGroup>
+      <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <!-- CA1822: Instance member does not access instance data and can be marked as static -->
+        <!-- CS1573: Undocumented public symbol while -doc compiler option is used -->
+        <!-- CS1591: Missing XML comment for publicly visible type -->
+        <!-- CA1816: Dispose() should call GC.SuppressFinalize()-->
+        <NoWarn>CA1822,CS1573,CS1591,CA1816</NoWarn>
+        <DebugType>none</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <Optimize>True</Optimize>
+      <DebugType>full</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <Optimize>False</Optimize>
+      <DebugType>full</DebugType>
+    </PropertyGroup>
+</Project>
