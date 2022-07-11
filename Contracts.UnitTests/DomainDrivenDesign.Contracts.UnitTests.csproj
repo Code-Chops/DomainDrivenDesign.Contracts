@@ -42,7 +42,7 @@
     </ItemGroup>
 
 	<ItemGroup>
-        <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.7.0" />
+        <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.7.1" />
 	</ItemGroup>
 
 	<ItemGroup>
