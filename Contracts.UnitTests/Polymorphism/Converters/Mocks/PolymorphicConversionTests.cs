@@ -1,9 +1,8 @@
 using System.Text.Json;
 using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
 using CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Converters;
-using CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism.Converters.Mocks;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism.Converters;
+namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism.Converters.Mocks;
 
 public class PolymorphicJsonConversionTests
 {

@@ -12,7 +12,7 @@ internal class PolymorphicJsonConverter : JsonConverter<PolymorphicContract>
 
 	internal PolymorphicJsonConverter(IEnumerable<PolymorphicContract> contracts)
 	{
-		this.ContractsByTypeId = contracts.ToDictionary(contract => contract.TypeId);
+		this.ContractsByTypeId = contracts.ToDictionary(contract => contract.TypeId ?? throw new Exception($"Contract {contract} has a ID of null. This is not allowed."));
 	}
 
 	/// <summary>

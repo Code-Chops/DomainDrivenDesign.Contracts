@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>0.1.4</VersionPrefix>
-        <PackageReleaseNotes>Updated ImplementationDiscovery package.</PackageReleaseNotes>
+        <VersionPrefix>0.1.5</VersionPrefix>
+        <PackageReleaseNotes>Small changes to PolymorphicContract.</PackageReleaseNotes>
         <TargetFramework>net6.0</TargetFramework>
         <LangVersion>10</LangVersion>
     </PropertyGroup>
