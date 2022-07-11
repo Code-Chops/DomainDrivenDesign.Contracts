@@ -15,7 +15,7 @@ public class NumberConversionTests
 	private static NumberWrapperMock NumberWrapper { get; } = new(NumberInt, NumberDouble);
 	private const string NumberWrapperJson = @"{""IntNumber"":{""Value"":7},""DoubleNumber"":{""Value"":3.12}}";
 	private static JsonSerializerOptions JsonSerializerOptions { get; } = new() { WriteIndented = false };
-	private static PolymorphicConverter PolymorphicConverter { get; } = new(JsonSerializerOptions, new List<PolymorphicAdapter>(), new List<IPolymorphicContract>());
+	private static PolymorphicConverter PolymorphicConverter { get; } = new(JsonSerializerOptions, new List<PolymorphicAdapter>(), new List<PolymorphicContract>());
     
 	[Fact]
 	public void Deserialization_NumberInt_Is_Correct()

@@ -12,11 +12,11 @@ public class PolymorphicConverter
 	private IReadOnlyDictionary<Type, PolymorphicAdapter> AdaptersByContractType { get; }
 	private IReadOnlyDictionary<Type, PolymorphicAdapter> AdaptersByDomainObjectType { get; }
 
-	public PolymorphicConverter(JsonSerializerOptions options, IEnumerable<PolymorphicAdapter> adapters, IEnumerable<IPolymorphicContract> contracts)
+	public PolymorphicConverter(JsonSerializerOptions options, IEnumerable<PolymorphicAdapter> adapters, IEnumerable<PolymorphicContract> contracts)
 	{
 		this.SerializerOptions = options;
 
-		this.SerializerOptions.Converters.Add(new PolymorphicJsonConverter(contracts, options)); // This class is hard-coupled to the PolymorphicJsonConverter.
+		this.SerializerOptions.Converters.Add(new PolymorphicJsonConverter(contracts)); // This class is hard-coupled to the PolymorphicJsonConverter.
 
 		var adapterList = adapters as List<PolymorphicAdapter> ?? adapters.ToList();
 		this.AdaptersByContractType = adapterList.ToDictionary(adapter => adapter.GetContractType());

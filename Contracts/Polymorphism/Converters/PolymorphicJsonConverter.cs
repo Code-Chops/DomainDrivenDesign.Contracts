@@ -3,27 +3,22 @@ using System.Text.Json.Serialization;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Converters;
 
-internal class PolymorphicJsonConverter : JsonConverter<IPolymorphicContract>
+internal class PolymorphicJsonConverter : JsonConverter<PolymorphicContract>
 {
-	/// <summary>
-	/// Options without polymorphic converters.
-	/// </summary>
-	private JsonSerializerOptions SerializerOptions { get; }
-	private Dictionary<string, IPolymorphicContract> ContractsByTypeId { get; }
+	private Dictionary<string, PolymorphicContract> ContractsByTypeId { get; }
 
 	public override bool CanConvert(Type typeToConvert) 
-		=> typeToConvert.IsAbstract && typeToConvert.IsAssignableTo(typeof(IPolymorphicContract));
+		=> typeToConvert.IsAbstract && typeToConvert.IsAssignableTo(typeof(PolymorphicContract));
 
-	internal PolymorphicJsonConverter(IEnumerable<IPolymorphicContract> contracts, JsonSerializerOptions serializerOptions)
+	internal PolymorphicJsonConverter(IEnumerable<PolymorphicContract> contracts)
 	{
-		this.SerializerOptions = serializerOptions;
 		this.ContractsByTypeId = contracts.ToDictionary(contract => contract.TypeId);
 	}
 
 	/// <summary>
-	/// Reads the JSON and deserializes it to fit the correct <see cref="IPolymorphicContract"/>, based on the <see cref="IPolymorphicContract.TypeId"/> JSON-property.
+	/// Reads the JSON and deserializes it to fit the correct <see cref="PolymorphicContract"/>, based on the <see cref="PolymorphicContract.TypeId"/> JSON-property.
 	/// </summary>
-	public override IPolymorphicContract? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+	public override PolymorphicContract? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 	{
 		// Check for null values
 		if (reader.TokenType == JsonTokenType.Null) return default;
@@ -35,7 +30,7 @@ internal class PolymorphicJsonConverter : JsonConverter<IPolymorphicContract>
 
 		// Read the contract static type id from our JSON document.
 		using var jsonDocument = JsonDocument.ParseValue(ref reader);
-		var id = jsonDocument.RootElement.GetProperty(nameof(IPolymorphicContract.TypeId)).GetString();
+		var id = jsonDocument.RootElement.GetProperty(nameof(PolymorphicContract.TypeId)).GetString();
 
 		// See if that class can be deserialized or not.
 		if (String.IsNullOrEmpty(id) || !this.ContractsByTypeId.TryGetValue(id, out var contract))
@@ -44,10 +39,10 @@ internal class PolymorphicJsonConverter : JsonConverter<IPolymorphicContract>
 		}
 
 		// Deserialize it.
-		var value = (IPolymorphicContract?)JsonSerializer.Deserialize(ref readerAtStart, contract.GetType(), options) ?? throw new JsonException("Error during retrieval of JSON value.");
+		var value = (PolymorphicContract?)JsonSerializer.Deserialize(ref readerAtStart, contract.GetType(), options) ?? throw new JsonException("Error during retrieval of JSON value.");
 		return value;
 	}
 
-	public override void Write(Utf8JsonWriter writer, IPolymorphicContract objectToWrite, JsonSerializerOptions options)
+	public override void Write(Utf8JsonWriter writer, PolymorphicContract objectToWrite, JsonSerializerOptions options)
 		=> JsonSerializer.Serialize(writer, objectToWrite, objectToWrite.GetType(), options);
 }

@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>0.1.2</VersionPrefix>
-        <PackageReleaseNotes>Updated ImplementationDiscovery package and added extra unit tests for Number.</PackageReleaseNotes>
+        <VersionPrefix>0.1.3</VersionPrefix>
+        <PackageReleaseNotes>Updated packages and small improvements.</PackageReleaseNotes>
         <TargetFramework>net6.0</TargetFramework>
         <LangVersion>10</LangVersion>
     </PropertyGroup>
@@ -52,9 +52,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Codechops.DomainDrivenDesign.Domainmodeling" Version="0.0.4" />
-      <PackageReference Include="CodeChops.GenericMath" Version="1.3.6" />
-      <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.6.9" />
+      <PackageReference Include="Codechops.DomainDrivenDesign.Domainmodeling" Version="0.0.5" />
+      <PackageReference Include="CodeChops.GenericMath" Version="1.3.7" />
+      <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.7.0" />
     </ItemGroup>
 
     <PropertyGroup>
