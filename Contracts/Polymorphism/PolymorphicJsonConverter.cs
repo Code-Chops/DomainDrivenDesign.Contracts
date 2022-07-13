@@ -10,7 +10,7 @@ public class PolymorphicJsonConverter : JsonConverter<PolymorphicContract>
 	public override bool CanConvert(Type typeToConvert) 
 		=> typeToConvert.IsAbstract && typeToConvert.IsAssignableTo(typeof(PolymorphicContract));
 
-	internal PolymorphicJsonConverter(IEnumerable<PolymorphicContract> contracts)
+	public PolymorphicJsonConverter(IEnumerable<PolymorphicContract> contracts)
 	{
 		this.ContractsByTypeId = contracts.ToDictionary(contract => contract.TypeId ?? throw new Exception($"Contract {contract} has an ID of null."));
 	}
