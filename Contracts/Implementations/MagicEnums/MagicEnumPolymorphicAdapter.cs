@@ -1,11 +1,10 @@
 ﻿using System.Reflection;
-using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
 using CodeChops.DomainDrivenDesign.DomainModeling;
 using CodeChops.MagicEnums;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.Implementations.MagicEnums;
 
-public record MagicEnumPolymorphicAdapter<TMagicEnum> : PolymorphicAdapter<MagicEnumPolymorphicContract>
+public record MagicEnumAdapter<TMagicEnum> : Adapter<MagicEnumPolymorphicContract>
 	where TMagicEnum : IMagicEnum
 {
 	protected internal override Type GetDomainObjectType() => typeof(TMagicEnum);
@@ -16,9 +15,9 @@ public record MagicEnumPolymorphicAdapter<TMagicEnum> : PolymorphicAdapter<Magic
 		return contract;
 	}
 	
-	protected internal override IDomainObject ConvertContractToDomainObject(IContract contract)
+	protected internal override IDomainObject ConvertContractToDomainObject(Contract contract)
 	{
-		var magicEnumContract = contract as MagicEnumPolymorphicContract ?? throw new ArgumentException($"Contract should be of type {nameof(MagicEnumPolymorphicContract)} in {nameof(MagicEnumPolymorphicAdapter<TMagicEnum>)}."); 
+		var magicEnumContract = contract as MagicEnumPolymorphicContract ?? throw new ArgumentException($"Contract should be of type {nameof(MagicEnumPolymorphicContract)} in {nameof(MagicEnumAdapter<TMagicEnum>)}."); 
 
 		var magicEnum = (IMagicEnum)GetSingleMemberMethod.Invoke(obj: null, parameters: new object?[] { magicEnumContract.Name })!;
 		return magicEnum;

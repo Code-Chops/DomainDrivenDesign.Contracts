@@ -1,5 +1,3 @@
 ﻿namespace CodeChops.DomainDrivenDesign.Contracts;
 
-public interface IContract
-{
-}
+public abstract record Contract;

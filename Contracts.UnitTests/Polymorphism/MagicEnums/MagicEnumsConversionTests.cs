@@ -1,28 +1,28 @@
 ﻿using System.Text.Json;
+using CodeChops.DomainDrivenDesign.Contracts.Implementations;
 using CodeChops.DomainDrivenDesign.Contracts.Implementations.MagicEnums;
 using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism.Default.MagicEnums;
+namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism.MagicEnums;
 
 public class MagicEnumsConversionTests
 {
-	private PolymorphicContract Contract { get; }
+	private static MagicEnumPolymorphicContract Contract { get; } = new MagicEnumPolymorphicContract(MagicEnumMock.Value2);
 	private const string Json = @$"{{""{nameof(MagicEnumPolymorphicContract.SpecificTypeId)}"":""{nameof(MagicEnumMock)}"",""{nameof(MagicEnumPolymorphicContract.Name)}"":""{nameof(MagicEnumMock.Value2)}"",""{nameof(MagicEnumPolymorphicContract.TypeId)}"":""{nameof(MagicEnumPolymorphicContract)}""}}";
-	private JsonSerializerOptions JsonSerializerOptions { get; } = new() { WriteIndented = false };
-	private PolymorphicConverter PolymorphicConverter { get; }
-	private PolymorphicAdapter Adapter { get; } = new MagicEnumPolymorphicAdapter<MagicEnumMock>();
-
-	public MagicEnumsConversionTests()
+	private static JsonSerializerOptions JsonSerializerOptions { get; } = new()
 	{
-		this.Contract = new MagicEnumPolymorphicContract(MagicEnumMock.Value2);
-		this.PolymorphicConverter = new(this.JsonSerializerOptions, new[] { this.Adapter }, new[] { this.Contract });
-	}
+		WriteIndented = false, 
+		Converters =
+		{
+			new ContractDomainJsonConverter(new PolymorphicJsonConverter(new[] { Contract }), new[] { new MagicEnumAdapter<MagicEnumMock>() })
+		}
+	};
 
 	[Fact]
 	public void Conversion_ToDomainModel_IsCorrect()
 	{
-		var contract = new MagicEnumPolymorphicContract(MagicEnumMock.Value2);
-		var magicEnum = (MagicEnumMock)this.PolymorphicConverter.ConvertContractToDomainObject(contract).Single();
+		var magicEnum = JsonSerializer.Deserialize<MagicEnumMock>(Json, JsonSerializerOptions)!;
+		Assert.NotNull(magicEnum);
 		
 		Assert.Equal(typeof(MagicEnumMock), magicEnum.GetType());
 		Assert.Equal(MagicEnumMock.Value2.Name, magicEnum.Name);
@@ -32,7 +32,8 @@ public class MagicEnumsConversionTests
 	[Fact]
 	public void Deserialization_MagicEnum_Is_Correct()
 	{
-		var contract = (MagicEnumPolymorphicContract)this.PolymorphicConverter.Deserialize<PolymorphicContract>(Json);
+		var contract = JsonSerializer.Deserialize<MagicEnumPolymorphicContract>(Json, JsonSerializerOptions)!;
+		Assert.NotNull(contract);
 
 		Assert.Equal(typeof(MagicEnumPolymorphicContract), contract.GetType());
 		Assert.Equal(MagicEnumMock.Value2.Name, contract.Name);
@@ -41,7 +42,7 @@ public class MagicEnumsConversionTests
 	[Fact]
 	public void Serialization_MagicEnum_Is_Correct()
 	{
-		var json = this.PolymorphicConverter.Serialize(this.Contract);
+		var json = JsonSerializer.Serialize(Contract, JsonSerializerOptions);
         
 		Assert.Equal(Json, json);
 	}

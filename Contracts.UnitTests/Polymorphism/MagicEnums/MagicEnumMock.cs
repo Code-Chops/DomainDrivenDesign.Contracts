@@ -1,6 +1,6 @@
 ﻿using CodeChops.MagicEnums;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism.Default.MagicEnums;
+namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism.MagicEnums;
 
 public record MagicEnumMock : MagicEnum<MagicEnumMock>
 {

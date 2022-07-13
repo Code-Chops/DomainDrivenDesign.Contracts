@@ -3,6 +3,13 @@ using System.Text.Json.Serialization;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
 
+/// <summary>
+/// This polymorphic domain converter can convert:
+/// <list type="bullet">
+/// <item>Domain object(s) to contract(s) (et vice versa): 1 to 1, many to 1. Using a <see cref="Adapter{TPolymorphicContract}"/>.</item>
+/// <item>Domain objects to JSON directly (et vice versa). Using a <see cref="Adapter{TPolymorphicContract}"/>.</item>
+/// </list>
+/// </summary>
 public class PolymorphicJsonConverter : JsonConverter<PolymorphicContract>
 {
 	private Dictionary<string, PolymorphicContract> ContractsByTypeId { get; }
