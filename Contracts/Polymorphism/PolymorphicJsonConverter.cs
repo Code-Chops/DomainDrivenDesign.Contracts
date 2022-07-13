@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
 
-internal class PolymorphicJsonConverter : JsonConverter<PolymorphicContract>
+public class PolymorphicJsonConverter : JsonConverter<PolymorphicContract>
 {
 	private Dictionary<string, PolymorphicContract> ContractsByTypeId { get; }
 

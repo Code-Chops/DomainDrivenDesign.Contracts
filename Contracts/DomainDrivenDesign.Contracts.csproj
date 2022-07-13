@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>0.2.0</VersionPrefix>
-        <PackageReleaseNotes>Changed polymorphism. Added unit tests. Added support for MagicEnums. Updated packages.</PackageReleaseNotes>
+        <VersionPrefix>0.2.1</VersionPrefix>
+        <PackageReleaseNotes>Made JsonConverter public. Added interface to Converter.</PackageReleaseNotes>
         <TargetFramework>net6.0</TargetFramework>
         <LangVersion>10</LangVersion>
     </PropertyGroup>

@@ -11,7 +11,7 @@ namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
 /// <item>Serialize / deserialize a contract from / to JSON.</item>
 /// </list>
 /// </summary>
-public class PolymorphicConverter
+public class PolymorphicConverter : IPolymorphicConverter
 {
 	private JsonSerializerOptions SerializerOptions { get; }
 	private IReadOnlyDictionary<Type, PolymorphicAdapter> AdaptersByContractType { get; }
