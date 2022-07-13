@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>0.1.5</VersionPrefix>
-        <PackageReleaseNotes>Small changes to PolymorphicContract.</PackageReleaseNotes>
+        <VersionPrefix>0.2.0</VersionPrefix>
+        <PackageReleaseNotes>Changed polymorphism. Added unit tests. Added support for MagicEnums. Updated packages.</PackageReleaseNotes>
         <TargetFramework>net6.0</TargetFramework>
         <LangVersion>10</LangVersion>
     </PropertyGroup>
@@ -52,9 +52,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Codechops.DomainDrivenDesign.Domainmodeling" Version="0.0.5" />
-      <PackageReference Include="CodeChops.GenericMath" Version="1.3.7" />
-      <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.7.1" />
+      <PackageReference Include="Codechops.DomainDrivenDesign.DomainModeling" Version="0.0.8" />
+      <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.8.0" />
     </ItemGroup>
 
     <PropertyGroup>

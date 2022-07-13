@@ -1,6 +1,7 @@
-﻿using CodeChops.ImplementationDiscovery;
+﻿using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
+using CodeChops.ImplementationDiscovery;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Converters.Numbers;
+namespace CodeChops.DomainDrivenDesign.Contracts.Implementations.Numbers;
 
 [DiscoverImplementations(generateIdsForImplementations: true)]
 public abstract partial record NumberContract<TNumber> : PolymorphicContract

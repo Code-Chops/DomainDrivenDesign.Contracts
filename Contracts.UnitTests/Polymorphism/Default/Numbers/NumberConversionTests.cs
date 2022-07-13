@@ -1,9 +1,8 @@
 ﻿using System.Text.Json;
 using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
-using CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Converters;
 using CodeChops.GenericMath;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism.Converters.Numbers;
+namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism.Default.Numbers;
 
 public class NumberConversionTests
 {
@@ -12,8 +11,8 @@ public class NumberConversionTests
 	private static Number<double> NumberDouble { get; } = new(3.12);
 	private const string NumberDoubleJson = @"{""Value"":3.12}";
 
-	private static NumberWrapperMock NumberWrapper { get; } = new(NumberInt, NumberDouble);
-	private const string NumberWrapperJson = @"{""IntNumber"":{""Value"":7},""DoubleNumber"":{""Value"":3.12}}";
+	private static NumberWrapperContractMock NumberWrapperContract { get; } = new(NumberInt, NumberDouble);
+	private const string NumberWrapperJson = @$"{{""{nameof(NumberWrapperContractMock.IntNumber)}"":{{""Value"":7}},""{nameof(NumberWrapperContractMock.DoubleNumber)}"":{{""Value"":3.12}}}}";
 	private static JsonSerializerOptions JsonSerializerOptions { get; } = new() { WriteIndented = false };
 	private static PolymorphicConverter PolymorphicConverter { get; } = new(JsonSerializerOptions, new List<PolymorphicAdapter>(), new List<PolymorphicContract>());
     
@@ -54,9 +53,9 @@ public class NumberConversionTests
 	[Fact]
 	public void Deserialization_NumberWrapper_Is_Correct()
 	{
-		var numberWrapper = PolymorphicConverter.Deserialize<NumberWrapperMock>(NumberWrapperJson);
+		var numberWrapper = PolymorphicConverter.Deserialize<NumberWrapperContractMock>(NumberWrapperJson);
 
-		Assert.Equal(typeof(NumberWrapperMock), numberWrapper.GetType());
+		Assert.Equal(typeof(NumberWrapperContractMock), numberWrapper.GetType());
 		Assert.Equal(NumberDouble.Value, numberWrapper.DoubleNumber.Value);
 		Assert.Equal(NumberInt.Value, numberWrapper.IntNumber.Value);	
 	}
@@ -64,7 +63,7 @@ public class NumberConversionTests
 	[Fact]
 	public void Serialization_NumberWrapper_Is_Correct()
 	{
-		var json = PolymorphicConverter.Serialize(NumberWrapper);
+		var json = PolymorphicConverter.Serialize(NumberWrapperContract);
         
 		Assert.Equal(NumberWrapperJson, json);
 	}

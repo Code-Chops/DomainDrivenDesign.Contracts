@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Converters;
+namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
 
 internal class PolymorphicJsonConverter : JsonConverter<PolymorphicContract>
 {
@@ -12,7 +12,7 @@ internal class PolymorphicJsonConverter : JsonConverter<PolymorphicContract>
 
 	internal PolymorphicJsonConverter(IEnumerable<PolymorphicContract> contracts)
 	{
-		this.ContractsByTypeId = contracts.ToDictionary(contract => contract.TypeId ?? throw new Exception($"Contract {contract} has a ID of null. This is not allowed."));
+		this.ContractsByTypeId = contracts.ToDictionary(contract => contract.TypeId ?? throw new Exception($"Contract {contract} has an ID of null."));
 	}
 
 	/// <summary>
