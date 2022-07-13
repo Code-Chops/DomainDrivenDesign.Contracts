@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>0.2.2</VersionPrefix>
-        <PackageReleaseNotes>Made constructor of JsonConverter public.</PackageReleaseNotes>
+        <VersionPrefix>0.3.0</VersionPrefix>
+        <PackageReleaseNotes>Changed the converter to a json converter.</PackageReleaseNotes>
         <TargetFramework>net6.0</TargetFramework>
         <LangVersion>10</LangVersion>
     </PropertyGroup>
