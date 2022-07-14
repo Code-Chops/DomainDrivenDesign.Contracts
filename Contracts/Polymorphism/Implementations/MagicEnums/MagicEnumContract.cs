@@ -2,16 +2,16 @@
 
 namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Implementations.MagicEnums;
 
-public record MagicEnumContract : PolymorphicContract
+public record MagicEnumContract : PolymorphicContract, IHasMultipleAdaptersContract
 {
-	public string SpecificTypeId { get; } = null!;
+	public string AdapterId { get; init; } = null!;
 	public string Name { get; init; } = null!;
 	
 	public MagicEnumContract(IMagicEnum magicEnum)
 	{
 		if (magicEnum is null) throw new ArgumentNullException(nameof(magicEnum));
 
-		this.SpecificTypeId = GetNameWithoutGenericParameters(magicEnum);
+		this.AdapterId = GetNameWithoutGenericParameters(magicEnum);
 		this.Name = magicEnum.ToString()!;
 	}
 

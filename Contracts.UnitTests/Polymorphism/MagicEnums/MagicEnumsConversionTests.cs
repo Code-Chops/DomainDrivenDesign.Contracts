@@ -6,44 +6,68 @@ namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism.MagicEnu
 
 public class MagicEnumsConversionTests
 {
-	private static MagicEnumContract Contract { get; } = new(MagicEnumMock.Value2);
-	private const string Json = @$"{{""{nameof(MagicEnumContract.SpecificTypeId)}"":""{nameof(MagicEnumMock)}"",""{nameof(MagicEnumContract.Name)}"":""{nameof(MagicEnumMock.Value2)}"",""{nameof(MagicEnumContract.TypeId)}"":""{nameof(MagicEnumContract)}""}}";
-	private static JsonSerializerOptions JsonSerializerOptions { get; } = new()
+	private static MagicEnumContract Contract { get; } = new(MagicEnumMock1.Value2);
+	private const string Json = @$"{{""{nameof(MagicEnumContract.AdapterId)}"":""{nameof(MagicEnumMock1)}"",""{nameof(MagicEnumContract.Name)}"":""{nameof(MagicEnumMock1.Value2)}"",""{nameof(MagicEnumContract.TypeId)}"":""{nameof(MagicEnumContract)}""}}";
+	private JsonSerializerOptions JsonSerializerOptions { get; }
+
+	public MagicEnumsConversionTests()
 	{
-		WriteIndented = false, 
-		Converters =
+		this.JsonSerializerOptions = new()
 		{
-			new AdaptingJsonConverter(new[] { new MagicEnumAdapter<MagicEnumMock>() }),
-			new PolymorphicJsonConverter(new [] { Contract}),
-		}
-	};
+			WriteIndented = false, 
+			Converters =
+			{
+				new AdaptingJsonConverter(new[] { new MagicEnumAdapter<MagicEnumMock1>() }),
+			}
+		};
+	}
 
 	[Fact]
 	public void Conversion_ToDomainModel_IsCorrect()
 	{
-		var magicEnum = JsonSerializer.Deserialize<MagicEnumMock>(Json, JsonSerializerOptions)!;
+		var magicEnum = JsonSerializer.Deserialize<MagicEnumMock1>(Json, this.JsonSerializerOptions)!;
 		Assert.NotNull(magicEnum);
 		
-		Assert.Equal(typeof(MagicEnumMock), magicEnum.GetType());
-		Assert.Equal(MagicEnumMock.Value2.Name, magicEnum.Name);
-		Assert.Equal(MagicEnumMock.Value2.Value.ToString(), magicEnum.Value.ToString());
+		Assert.Equal(typeof(MagicEnumMock1), magicEnum.GetType());
+		Assert.Equal(MagicEnumMock1.Value2.Name, magicEnum.Name);
+		Assert.Equal(MagicEnumMock1.Value2.Value.ToString(), magicEnum.Value.ToString());
 	}
 	
 	[Fact]
 	public void Deserialization_MagicEnum_Is_Correct()
 	{
-		var contract = JsonSerializer.Deserialize<MagicEnumContract>(Json, JsonSerializerOptions)!;
+		var contract = JsonSerializer.Deserialize<MagicEnumContract>(Json, this.JsonSerializerOptions)!;
 		Assert.NotNull(contract);
 
 		Assert.Equal(typeof(MagicEnumContract), contract.GetType());
-		Assert.Equal(MagicEnumMock.Value2.Name, contract.Name);
+		Assert.Equal(MagicEnumMock1.Value2.Name, contract.Name);
 	}
 
 	[Fact]
 	public void Serialization_MagicEnum_Is_Correct()
 	{
-		var json = JsonSerializer.Serialize(Contract, JsonSerializerOptions);
+		var json = JsonSerializer.Serialize(Contract, this.JsonSerializerOptions);
         
 		Assert.Equal(Json, json);
+	}
+
+	[Fact]
+	public void Deserialization_WithMultipleAdapters_Should_Work()
+	{
+		var jsonSerializerOptions = new JsonSerializerOptions()
+		{
+			WriteIndented = false, 
+			Converters =
+			{
+				new AdaptingJsonConverter(new Adapter[] { new MagicEnumAdapter<MagicEnumMock1>(), new MagicEnumAdapter<MagicEnumMock2>() }),
+			}
+		};
+		
+		var magicEnum = JsonSerializer.Deserialize<MagicEnumMock1>(Json, jsonSerializerOptions)!;
+		Assert.NotNull(magicEnum);
+		
+		Assert.Equal(typeof(MagicEnumMock1), magicEnum.GetType());
+		Assert.Equal(MagicEnumMock1.Value2.Name, magicEnum.Name);
+		Assert.Equal(MagicEnumMock1.Value2.Value.ToString(), magicEnum.Value.ToString());
 	}
 }

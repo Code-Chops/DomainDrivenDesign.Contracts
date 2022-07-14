@@ -9,6 +9,7 @@ public abstract record NumberAdapter<TNumber, TContract> : NumberAdapter
     where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible
     where TContract : NumberContract<TNumber>, IHasStaticTypeId<Id<string>>, new()
 {
+    public override string Id => typeof(TContract).Name;
     protected internal override Type GetDomainObjectType() => typeof(Number<TNumber>);
     protected internal override Type GetContractType() => typeof(TContract);
     

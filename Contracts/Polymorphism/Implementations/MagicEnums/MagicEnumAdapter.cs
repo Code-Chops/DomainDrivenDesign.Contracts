@@ -7,12 +7,13 @@ namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Implementations.Ma
 public record MagicEnumAdapter<TMagicEnum>() : MagicEnumAdapter(typeof(TMagicEnum)) 
 	where TMagicEnum : IMagicEnum
 {
+	public override string Id => typeof(TMagicEnum).Name;
 	protected internal override Type GetDomainObjectType() => typeof(TMagicEnum);
 }
 
 public record MagicEnumAdapter : Adapter<MagicEnumContract>
 {
-	protected internal override Type GetDomainObjectType() => this.MagicEnumType;
+	public override string Id => this.MagicEnumType.Name;
 	private Type MagicEnumType { get; }
 	private MethodInfo GetSingleMemberMethod { get; }
 
@@ -23,6 +24,8 @@ public record MagicEnumAdapter : Adapter<MagicEnumContract>
 			.GetMethods(bindingAttr: BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
 			.Single(method => method.Name == nameof(MagicEnumDummy.GetSingleMember) && method.GetParameters().Any(parameter => parameter.ParameterType == typeof(string)));
 	}
+	
+	protected internal override Type GetDomainObjectType() => this.MagicEnumType;
 
 	protected internal override MagicEnumContract ConvertDomainObjectToContract(IDomainObject domainObject)
 	{
@@ -40,5 +43,4 @@ public record MagicEnumAdapter : Adapter<MagicEnumContract>
 	
 	// ReSharper disable once ClassNeverInstantiated.Local
 	private record MagicEnumDummy : MagicEnum<MagicEnumDummy>;
-
 }

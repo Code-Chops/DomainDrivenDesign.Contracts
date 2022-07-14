@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
+using CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Implementations.MagicEnums;
 using CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Implementations.Numbers;
 using CodeChops.DomainDrivenDesign.DomainModeling;
 
@@ -15,7 +16,7 @@ namespace CodeChops.DomainDrivenDesign.Contracts;
 public class AdaptingJsonConverter : JsonConverter<IDomainObject>
 {
 	private PolymorphicJsonConverter PolymorphicJsonConverter { get; }
-	private ImmutableDictionary<Type, Adapter> AdaptersByContractType { get; }
+	private ImmutableDictionary<string, Adapter> AdaptersById { get; }
 	private ImmutableDictionary<Type, Adapter> AdaptersByDomainObjectType { get; }
 
 	public override bool CanConvert(Type typeToConvert) 
@@ -32,7 +33,9 @@ public class AdaptingJsonConverter : JsonConverter<IDomainObject>
 			.OfType<PolymorphicContract>();
 		
 		this.PolymorphicJsonConverter = new PolymorphicJsonConverter(polymorphicContracts);
-		this.AdaptersByContractType = adapterList.ToImmutableDictionary(adapter => adapter.GetContractType() ?? throw new Exception($"Contract type on {adapter.GetType().Name} is null."));
+		
+		// Multiple adapters can be used on 1 contract.
+		this.AdaptersById = adapterList.ToImmutableDictionary(adapter => adapter.Id ?? throw new Exception($"Contract type on {adapter.GetType().Name} is null."));
 		this.AdaptersByDomainObjectType = adapterList.ToImmutableDictionary(adapter => adapter.GetDomainObjectType() ?? throw new Exception($"Domain object type on {adapter.GetType().Name} is null."));
 	}
 
@@ -41,9 +44,13 @@ public class AdaptingJsonConverter : JsonConverter<IDomainObject>
 		var contract = GetContract(ref reader);
 		var contractType = contract.GetType();
 		
-		// Convert it to a domain object using the correct adapter.
-		if (!this.AdaptersByContractType.TryGetValue(contractType, out var adapter)) throw new KeyNotFoundException($"No injected {nameof(Adapter)} found for {contractType.Name} in {nameof(AdaptingJsonConverter)}.");
+		var adapterId = contract is IHasMultipleAdaptersContract multipleAdaptersContract 
+			? multipleAdaptersContract.AdapterId
+			: contractType.Name;
 		
+		if (!this.AdaptersById.TryGetValue(adapterId, out var adapter)) throw new KeyNotFoundException($"No injected {nameof(Adapter)} found for {contractType.Name} in {nameof(AdaptingJsonConverter)}.");
+		
+		// Convert it to a domain object using the correct adapter.
 		var domainObject = adapter.ConvertContractToDomainObject(contract);
 		
 		return domainObject;
