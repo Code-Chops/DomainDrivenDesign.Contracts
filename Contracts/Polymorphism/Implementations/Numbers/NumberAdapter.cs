@@ -3,7 +3,7 @@ using CodeChops.GenericMath;
 using CodeChops.Identities;
 using CodeChops.ImplementationDiscovery;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.Implementations.Numbers;
+namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Implementations.Numbers;
 
 public abstract record NumberAdapter<TNumber, TContract> : NumberAdapter
     where TNumber : struct, IComparable<TNumber>, IEquatable<TNumber>, IConvertible

@@ -1,8 +1,9 @@
 ﻿using System.Text.Json;
-using CodeChops.DomainDrivenDesign.Contracts.Implementations;
-using CodeChops.DomainDrivenDesign.Contracts.Implementations.Numbers;
 using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
+using CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Implementations.Numbers;
 using CodeChops.GenericMath;
+using NumberDoubleContract = CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Implementations.Numbers.NumberDoubleContract;
+using NumberIntContract = CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Implementations.Numbers.NumberIntContract;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism.Numbers;
 
@@ -24,7 +25,7 @@ public class NumberConversionTests
 			WriteIndented = false, 
 			Converters =
 			{
-				new ContractDomainJsonConverter(new PolymorphicJsonConverter(NumberContract.Implementations.GetValues()), NumberAdapter.Implementations.GetValues())
+				new AdaptingJsonConverter()
 			}
 		};
 	}

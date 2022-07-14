@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Collections.Immutable;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
@@ -12,14 +13,14 @@ namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
 /// </summary>
 public class PolymorphicJsonConverter : JsonConverter<PolymorphicContract>
 {
-	private Dictionary<string, PolymorphicContract> ContractsByTypeId { get; }
+	private ImmutableDictionary<string, PolymorphicContract> ContractsByTypeId { get; }
 
 	public override bool CanConvert(Type typeToConvert) 
 		=> typeToConvert.IsAbstract && typeToConvert.IsAssignableTo(typeof(PolymorphicContract));
 
 	public PolymorphicJsonConverter(IEnumerable<PolymorphicContract> contracts)
 	{
-		this.ContractsByTypeId = contracts.ToDictionary(contract => contract.TypeId ?? throw new Exception($"Contract {contract} has an ID of null."));
+		this.ContractsByTypeId = contracts.ToImmutableDictionary(contract => contract.TypeId ?? throw new Exception($"Contract {contract} has an ID of null."));
 	}
 
 	/// <summary>

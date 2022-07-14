@@ -1,20 +1,20 @@
 ﻿using System.Text.Json;
-using CodeChops.DomainDrivenDesign.Contracts.Implementations;
-using CodeChops.DomainDrivenDesign.Contracts.Implementations.MagicEnums;
 using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
+using CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Implementations.MagicEnums;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism.MagicEnums;
 
 public class MagicEnumsConversionTests
 {
-	private static MagicEnumPolymorphicContract Contract { get; } = new MagicEnumPolymorphicContract(MagicEnumMock.Value2);
-	private const string Json = @$"{{""{nameof(MagicEnumPolymorphicContract.SpecificTypeId)}"":""{nameof(MagicEnumMock)}"",""{nameof(MagicEnumPolymorphicContract.Name)}"":""{nameof(MagicEnumMock.Value2)}"",""{nameof(MagicEnumPolymorphicContract.TypeId)}"":""{nameof(MagicEnumPolymorphicContract)}""}}";
+	private static MagicEnumContract Contract { get; } = new(MagicEnumMock.Value2);
+	private const string Json = @$"{{""{nameof(MagicEnumContract.SpecificTypeId)}"":""{nameof(MagicEnumMock)}"",""{nameof(MagicEnumContract.Name)}"":""{nameof(MagicEnumMock.Value2)}"",""{nameof(MagicEnumContract.TypeId)}"":""{nameof(MagicEnumContract)}""}}";
 	private static JsonSerializerOptions JsonSerializerOptions { get; } = new()
 	{
 		WriteIndented = false, 
 		Converters =
 		{
-			new ContractDomainJsonConverter(new PolymorphicJsonConverter(new[] { Contract }), new[] { new MagicEnumAdapter<MagicEnumMock>() })
+			new AdaptingJsonConverter(new[] { new MagicEnumAdapter<MagicEnumMock>() }),
+			new PolymorphicJsonConverter(new [] { Contract}),
 		}
 	};
 
@@ -32,10 +32,10 @@ public class MagicEnumsConversionTests
 	[Fact]
 	public void Deserialization_MagicEnum_Is_Correct()
 	{
-		var contract = JsonSerializer.Deserialize<MagicEnumPolymorphicContract>(Json, JsonSerializerOptions)!;
+		var contract = JsonSerializer.Deserialize<MagicEnumContract>(Json, JsonSerializerOptions)!;
 		Assert.NotNull(contract);
 
-		Assert.Equal(typeof(MagicEnumPolymorphicContract), contract.GetType());
+		Assert.Equal(typeof(MagicEnumContract), contract.GetType());
 		Assert.Equal(MagicEnumMock.Value2.Name, contract.Name);
 	}
 

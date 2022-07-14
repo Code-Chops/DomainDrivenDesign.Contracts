@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>0.3.0</VersionPrefix>
-        <PackageReleaseNotes>Changed the converter to a json converter.</PackageReleaseNotes>
+        <VersionPrefix>0.4.0</VersionPrefix>
+        <PackageReleaseNotes>Added unit tests. Added numbers as default. Fixed adaptingconverter.</PackageReleaseNotes>
         <TargetFramework>net6.0</TargetFramework>
         <LangVersion>10</LangVersion>
     </PropertyGroup>

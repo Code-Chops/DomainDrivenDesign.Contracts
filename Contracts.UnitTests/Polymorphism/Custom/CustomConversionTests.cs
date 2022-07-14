@@ -22,7 +22,7 @@ public class CustomPolymorphicJsonConversionTests
     [Fact]
     public void Serialization_Is_Correct()
     {
-        var json = JsonSerializer.Serialize(Point3D, JsonSerializerOptions);
+        var json = JsonSerializer.Serialize<PointContract>(Point3D, JsonSerializerOptions);
         
         Assert.Equal(ExpectedJson, json);
     }

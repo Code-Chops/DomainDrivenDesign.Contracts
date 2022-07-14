@@ -1,14 +1,13 @@
-﻿using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
-using CodeChops.MagicEnums;
+﻿using CodeChops.MagicEnums;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.Implementations.MagicEnums;
+namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Implementations.MagicEnums;
 
-public record MagicEnumPolymorphicContract : PolymorphicContract
+public record MagicEnumContract : PolymorphicContract
 {
 	public string SpecificTypeId { get; } = null!;
 	public string Name { get; init; } = null!;
 	
-	public MagicEnumPolymorphicContract(IMagicEnum magicEnum)
+	public MagicEnumContract(IMagicEnum magicEnum)
 	{
 		if (magicEnum is null) throw new ArgumentNullException(nameof(magicEnum));
 
@@ -17,7 +16,7 @@ public record MagicEnumPolymorphicContract : PolymorphicContract
 	}
 
 	// ReSharper disable once UnusedMember.Global
-	public MagicEnumPolymorphicContract()
+	public MagicEnumContract()
 	{
 	}
 

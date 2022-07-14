@@ -2,22 +2,22 @@
 using CodeChops.DomainDrivenDesign.DomainModeling;
 using CodeChops.MagicEnums;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.Implementations.MagicEnums;
+namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Implementations.MagicEnums;
 
-public record MagicEnumAdapter<TMagicEnum> : Adapter<MagicEnumPolymorphicContract>
+public record MagicEnumAdapter<TMagicEnum> : Adapter<MagicEnumContract>
 	where TMagicEnum : IMagicEnum
 {
 	protected internal override Type GetDomainObjectType() => typeof(TMagicEnum);
 	
-	protected internal override MagicEnumPolymorphicContract ConvertDomainObjectToContract(IDomainObject domainObject)
+	protected internal override MagicEnumContract ConvertDomainObjectToContract(IDomainObject domainObject)
 	{
-		var contract = new MagicEnumPolymorphicContract((IMagicEnum)domainObject);
+		var contract = new MagicEnumContract((IMagicEnum)domainObject);
 		return contract;
 	}
 	
 	protected internal override IDomainObject ConvertContractToDomainObject(Contract contract)
 	{
-		var magicEnumContract = contract as MagicEnumPolymorphicContract ?? throw new ArgumentException($"Contract should be of type {nameof(MagicEnumPolymorphicContract)} in {nameof(MagicEnumAdapter<TMagicEnum>)}."); 
+		var magicEnumContract = contract as MagicEnumContract ?? throw new ArgumentException($"Contract should be of type {nameof(MagicEnumContract)} in {nameof(MagicEnumAdapter<TMagicEnum>)}."); 
 
 		var magicEnum = (IMagicEnum)GetSingleMemberMethod.Invoke(obj: null, parameters: new object?[] { magicEnumContract.Name })!;
 		return magicEnum;
