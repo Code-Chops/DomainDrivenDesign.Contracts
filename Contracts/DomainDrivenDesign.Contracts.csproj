@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>0.4.0</VersionPrefix>
-        <PackageReleaseNotes>Added unit tests. Added numbers as default. Fixed adaptingconverter.</PackageReleaseNotes>
+        <VersionPrefix>0.4.1</VersionPrefix>
+        <PackageReleaseNotes>Added non-generic MagicEnum adapter.</PackageReleaseNotes>
         <TargetFramework>net6.0</TargetFramework>
         <LangVersion>10</LangVersion>
     </PropertyGroup>
