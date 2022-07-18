@@ -1,17 +1,13 @@
 ﻿using System.Collections.Immutable;
 using System.Runtime.Serialization;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
-using CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Implementations.MagicEnums;
-using CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Implementations.Numbers;
 using CodeChops.DomainDrivenDesign.DomainModeling;
 
-namespace CodeChops.DomainDrivenDesign.Contracts;
+namespace CodeChops.DomainDrivenDesign.Contracts.Converters;
 
 /// <summary>
 /// This contract to domain converter can convert domain objects to JSON (et vice versa).
-/// Uses an injected <see cref="JsonConverter"/> and <see cref="Adapter{TPolymorphicContract}"/>(s).
+/// Uses an injected <see cref="PolymorphicJsonConverter"/> and <see cref="Adapter{TPolymorphicContract}"/>(s).
 /// </summary>
 public class AdaptingJsonConverter : JsonConverter<IDomainObject>
 {
@@ -25,7 +21,6 @@ public class AdaptingJsonConverter : JsonConverter<IDomainObject>
 	public AdaptingJsonConverter(IEnumerable<Adapter>? adapters = null)
 	{
 		adapters ??= Array.Empty<Adapter>();
-		adapters = adapters.Concat(NumberAdapter.Implementations.GetValues());
 		var adapterList = adapters as List<Adapter> ?? adapters.ToList();
 
 		var polymorphicContracts = adapterList
@@ -44,6 +39,7 @@ public class AdaptingJsonConverter : JsonConverter<IDomainObject>
 		var contract = GetContract(ref reader);
 		var contractType = contract.GetType();
 		
+		// ReSharper disable once SuspiciousTypeConversion.Global
 		var adapterId = contract is IHasMultipleAdaptersContract multipleAdaptersContract 
 			? multipleAdaptersContract.AdapterId
 			: contractType.Name;
@@ -52,7 +48,6 @@ public class AdaptingJsonConverter : JsonConverter<IDomainObject>
 		
 		// Convert it to a domain object using the correct adapter.
 		var domainObject = adapter.ConvertContractToDomainObject(contract);
-		
 		return domainObject;
 
 

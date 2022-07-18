@@ -1,7 +1,7 @@
 ﻿using CodeChops.DomainDrivenDesign.DomainModeling;
 using CodeChops.Identities;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests;
+namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Adapters;
 
 public class UserEntityMock : DomainObject
 {

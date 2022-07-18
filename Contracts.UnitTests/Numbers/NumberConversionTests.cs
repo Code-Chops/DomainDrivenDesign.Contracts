@@ -1,21 +1,17 @@
-﻿using System.Text.Json;
-using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
-using CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Implementations.Numbers;
+﻿using CodeChops.DomainDrivenDesign.Contracts.Converters.Numbers;
 using CodeChops.GenericMath;
-using NumberDoubleContract = CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Implementations.Numbers.NumberDoubleContract;
-using NumberIntContract = CodeChops.DomainDrivenDesign.Contracts.Polymorphism.Implementations.Numbers.NumberIntContract;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism.Numbers;
+namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Numbers;
 
 public class NumberConversionTests
 {
 	private static Number<int> NumberInt { get; } = new(7);
-	private const string NumberIntJson = @$"{{""Value"":7,""TypeId"":""{nameof(NumberIntContract)}""}}";
+	private const string NumberIntJson = "7";
 	private static Number<double> NumberDouble { get; } = new(3.12);
-	private const string NumberDoubleJson = @$"{{""Value"":3.12,""TypeId"":""{nameof(NumberDoubleContract)}""}}";
+	private const string NumberDoubleJson = "3.12";
 
 	private static NumberWrapperContractMock NumberWrapperContract { get; } = new() { IntNumber = NumberInt, DoubleNumber = NumberDouble };
-	private const string NumberWrapperJson = @$"{{""{nameof(NumberWrapperContractMock.IntNumber)}"":{{""{nameof(NumberContract<int>.Value)}"":7,""{nameof(PolymorphicContract.TypeId)}"":""{nameof(NumberIntContract)}""}},""{nameof(NumberWrapperContractMock.DoubleNumber)}"":{{""{nameof(NumberContract<int>.Value)}"":3.12,""{nameof(PolymorphicContract.TypeId)}"":""{nameof(NumberDoubleContract)}""}}}}";
+	private const string NumberWrapperJson = @$"{{""{nameof(NumberWrapperContractMock.IntNumber)}"":7,""{nameof(NumberWrapperContractMock.DoubleNumber)}"":3.12}}";
 	private JsonSerializerOptions JsonSerializerOptions { get; }
 
 	public NumberConversionTests()
@@ -23,10 +19,7 @@ public class NumberConversionTests
 		this.JsonSerializerOptions = new()
 		{
 			WriteIndented = false, 
-			Converters =
-			{
-				new AdaptingJsonConverter()
-			}
+			Converters = { new NumberJsonConverterFactory() }
 		};
 	}
 	

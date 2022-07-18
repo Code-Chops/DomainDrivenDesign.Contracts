@@ -1,6 +1,6 @@
-﻿using System.Text.Json;
+﻿using CodeChops.DomainDrivenDesign.Contracts.Converters;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests;
+namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Adapters;
 
 public class AdaptingJsonConverterTests
 {

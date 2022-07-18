@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>0.4.2</VersionPrefix>
-        <PackageReleaseNotes>Fixed mapping from contract to adapter (support for multiple adapters on 1 contract).</PackageReleaseNotes>
+        <VersionPrefix>0.5.0</VersionPrefix>
+        <PackageReleaseNotes>Simplified serialization of MagicEnums and Numbers.</PackageReleaseNotes>
         <TargetFramework>net6.0</TargetFramework>
         <LangVersion>10</LangVersion>
     </PropertyGroup>
@@ -53,7 +53,8 @@
 
     <ItemGroup>
       <PackageReference Include="Codechops.DomainDrivenDesign.DomainModeling" Version="0.0.8" />
-      <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.8.0" />
+      <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.8.1" />
+      <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
     </ItemGroup>
 
     <PropertyGroup>

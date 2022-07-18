@@ -1,6 +1,6 @@
 ﻿using CodeChops.DomainDrivenDesign.DomainModeling;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests;
+namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Adapters;
 
 public record UserAdapterMock : Adapter<UserContractMock, UserEntityMock>
 {

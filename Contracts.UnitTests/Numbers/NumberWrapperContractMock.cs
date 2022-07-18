@@ -1,6 +1,6 @@
 ﻿using CodeChops.GenericMath;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism.Numbers;
+namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Numbers;
 
 public class NumberWrapperContractMock
 {

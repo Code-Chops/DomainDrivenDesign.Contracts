@@ -3,21 +3,6 @@
 namespace CodeChops.DomainDrivenDesign.Contracts;
 
 /// <summary>
-/// Provides a way to convert an entity model (with a concrete contract type) to a contract and vice versa, using a domain object with a type discriminator.
-/// </summary>
-/// <typeparam name="TContract">The contract.</typeparam>
-public abstract record Adapter<TContract> : Adapter 
-	where TContract : Contract
-{
-	public override string Id => typeof(TContract).Name;
-
-	protected internal override Type GetContractType() => typeof(TContract);
-
-	protected internal abstract override TContract ConvertDomainObjectToContract(IDomainObject domainObject);
-}
-
-
-/// <summary>
 /// Provides a way to convert an entity model (of concrete types) to a contract and vice versa, using a domain object with a type discriminator.
 /// Whereby 1 contract is tightly coupled to 1 domain object type.
 /// </summary>
@@ -31,6 +16,20 @@ public abstract record Adapter<TContract, TDomainObject> : Adapter<TContract>
 	protected internal override Type GetDomainObjectType() => typeof(TDomainObject);
 
 	protected internal abstract override TDomainObject ConvertContractToDomainObject(Contract contract);
+}
+
+/// <summary>
+/// Provides a way to convert an entity model (with a concrete contract type) to a contract and vice versa, using a domain object with a type discriminator.
+/// </summary>
+/// <typeparam name="TContract">The contract.</typeparam>
+public abstract record Adapter<TContract> : Adapter 
+	where TContract : Contract
+{
+	public override string Id { get; } = typeof(TContract).Name;
+
+	protected internal override Type GetContractType() => typeof(TContract);
+
+	protected internal abstract override TContract ConvertDomainObjectToContract(IDomainObject domainObject);
 }
 
 /// <summary>
