@@ -1,16 +1,10 @@
 ﻿using CodeChops.DomainDrivenDesign.Contracts.Converters.Numbers;
 using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
 using CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism;
-using CodeChops.Geometry.Space;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests;
+namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Geometry;
 
-public class PointMock
-{
-	public Point<double> Point { get; init; }
-}
-
-public class Tests
+public class PointTests
 {
 	private static PointMock PointMock { get; } = new PointMock() { Point = (1, 7) };
 	private const string Json = $"{{\"Point\":{{\"X\":1,\"Y\":7}}}}";
@@ -32,6 +26,5 @@ public class Tests
 	{
 		var json = JsonSerializer.Serialize(PointMock, JsonSerializerOptions);
 		Assert.Equal(Json, json);
-		
 	}
 }
