@@ -27,7 +27,7 @@ public class MagicEnumJsonConverter : JsonConverter<IMagicEnum>
 
 		if (reader.TokenType != JsonTokenType.String) throw new JsonException($"Unexpected token found in JSON: {reader.TokenType}. Expected: {JsonTokenType.String}.");
 		
-		var enumIdentifier = reader.GetString() ?? throw new JsonException($"Unable to retrieve enum identifier when trying to deserialize {typeToConvert.GetType().Name}.");
+		var enumIdentifier = reader.GetString() ?? throw new JsonException($"Unable to retrieve enum identifier when trying to deserialize {typeToConvert.Name}.");
 		var delimiterIndex = enumIdentifier.IndexOf(EnumDelimiter);
 		if (delimiterIndex == -1) throw new JsonException($"No MagicEnum identifier delimiter ('{EnumDelimiter}') found in {enumIdentifier}.");
 

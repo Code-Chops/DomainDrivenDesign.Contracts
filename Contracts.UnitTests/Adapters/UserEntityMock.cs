@@ -1,12 +1,10 @@
-﻿using CodeChops.DomainDrivenDesign.DomainModeling;
-using CodeChops.Identities;
+﻿using CodeChops.DomainDrivenDesign.DomainModeling.Attributes;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Adapters;
 
-public class UserEntityMock : DomainObject
+[GenerateEntityId]
+public partial class UserEntityMock : Entity
 {
-	public IId GetId() => new Id<int>(0);
-	
 	public string Name { get; }
 
 	public UserEntityMock(string name)

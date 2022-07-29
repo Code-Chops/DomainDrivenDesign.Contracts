@@ -30,7 +30,7 @@ public class Tests
 	[Fact]
 	public void Serialization_Point_IsCorrect()
 	{
-		var json = JsonSerializer.Serialize<PointMock>(PointMock, JsonSerializerOptions);
+		var json = JsonSerializer.Serialize(PointMock, JsonSerializerOptions);
 		Assert.Equal(Json, json);
 		
 	}

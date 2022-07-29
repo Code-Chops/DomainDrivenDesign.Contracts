@@ -1,8 +1,6 @@
-﻿using CodeChops.DomainDrivenDesign.DomainModeling;
+﻿namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.MagicEnums;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.MagicEnums;
-
-public class EntityWithMagicEnumMock : DomainObject
+public class EntityWithMagicEnumMock : IDomainObject
 {
 	public int Age { get; init; }
 	public MagicEnumWrapperContractMock Wrapper { get; init; } = null!;

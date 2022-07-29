@@ -8,14 +8,12 @@ namespace CodeChops.DomainDrivenDesign.Contracts;
 /// </summary>
 public abstract record Adapter<TContract, TDomainObject> : Adapter<TContract>
 	where TContract : Contract
-	where TDomainObject : DomainObject
+	where TDomainObject : IDomainObject
 {
 	/// <summary>
 	/// The contract is tightly coupled to 1 domain object type.
 	/// </summary>
 	protected internal override Type GetDomainObjectType() => typeof(TDomainObject);
-
-	protected internal abstract override TDomainObject ConvertContractToDomainObject(Contract contract);
 }
 
 /// <summary>
