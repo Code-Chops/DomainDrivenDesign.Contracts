@@ -4,3 +4,4 @@ global using System.Text.Json.Serialization;
 
 global using CodeChops.DomainDrivenDesign.DomainModeling;
 global using CodeChops.DomainDrivenDesign.DomainModeling.Identities;
+global using CodeChops.DomainDrivenDesign.DomainModeling.Attributes;

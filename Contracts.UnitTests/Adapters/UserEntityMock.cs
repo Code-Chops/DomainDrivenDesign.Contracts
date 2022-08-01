@@ -1,8 +1,6 @@
-﻿using CodeChops.DomainDrivenDesign.DomainModeling.Attributes;
+﻿namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Adapters;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Adapters;
-
-[GenerateEntityId]
+[GenerateStronglyTypedId]
 public partial class UserEntityMock : Entity
 {
 	public string Name { get; }

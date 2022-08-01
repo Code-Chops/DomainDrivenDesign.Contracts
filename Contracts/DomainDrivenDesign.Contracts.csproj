@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>0.5.3</VersionPrefix>
-        <PackageReleaseNotes>Moved point unit tests.</PackageReleaseNotes>
+        <VersionPrefix>0.5.4</VersionPrefix>
+        <PackageReleaseNotes>Updated packages.</PackageReleaseNotes>
         <TargetFramework>net6.0</TargetFramework>
         <LangVersion>10</LangVersion>
     </PropertyGroup>
@@ -23,7 +23,7 @@
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <Copyright>Copyright (c) CodeChops $([System.DateTime]::Now.ToString(yyyy))</Copyright>
         <Description>
-            Easy use of contracts, adapters and polymorphism, using JSON. 
+            Easy use of contracts, adapters and polymorphism, using JSON.
         </Description>
         <AnalysisLevel>latest</AnalysisLevel>
         <Nullable>enable</Nullable>
@@ -35,7 +35,7 @@
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     </PropertyGroup>
-    
+
     <!-- Creates local nuget packages if in release mode and environment variable LocalNuGetPackagesFolder is configured -->
     <Target Name="AddNugetPackage" AfterTargets="Pack" Condition="'$(Configuration)' == 'Release' AND '$(LocalNuGetPackagesFolder)' != null">
         <Exec Command="$(LocalNuGetPackagesFolder)\nuget.exe add $(OutputPath)..\$(PackageId).$(PackageVersion).nupkg -source $(LocalNuGetPackagesFolder)" />
@@ -51,13 +51,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Codechops.DomainDrivenDesign.DomainModeling" Version="0.2.3" />
-      <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.9.6" />
-      <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
+        <PackageReference Include="Codechops.DomainDrivenDesign.DomainModeling" Version="0.5.0" />
+        <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.10.0" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
     </ItemGroup>
 
     <PropertyGroup>
-      <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -68,12 +68,12 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-      <Optimize>True</Optimize>
-      <DebugType>full</DebugType>
+        <Optimize>True</Optimize>
+        <DebugType>full</DebugType>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-      <Optimize>False</Optimize>
-      <DebugType>full</DebugType>
+        <Optimize>False</Optimize>
+        <DebugType>full</DebugType>
     </PropertyGroup>
 </Project>
