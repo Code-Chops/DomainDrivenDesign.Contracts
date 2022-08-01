@@ -1,3 +1,4 @@
+using CodeChops.DomainDrivenDesign.Contracts.Converters.Numbers;
 using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism;
@@ -5,8 +6,8 @@ namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism;
 public class CustomPolymorphicJsonConversionTests
 {
     private static Point3DContractMock Point3D { get; } = new(1, 2, 3);
-    private const string ExpectedJson = $@"{{""{nameof(Point3D.Z)}"":3,""{nameof(Point3D.X)}"":1,""{nameof(Point3D.Y)}"":2,""{nameof(PolymorphicContract.TypeId)}"":""{nameof(Point3DContractMock)}""}}";
-    private static JsonSerializerOptions JsonSerializerOptions { get; } = new() { WriteIndented = false, Converters = { new PolymorphicJsonConverter(PointContract.Implementations.GetValues()) }};
+    private const string ExpectedJson = $@"{{""{nameof(Point3D.Z)}"":3,""{nameof(PolymorphicContract.TypeId)}"":""{nameof(Point3DContractMock)}"",""{nameof(Point3D.X)}"":1,""{nameof(Point3D.Y)}"":2}}";
+    private static JsonSerializerOptions JsonSerializerOptions { get; } = new() { WriteIndented = false, Converters = { new PolymorphicJsonConverter(PointContract.Implementations.GetValues()), new IdentityJsonConverterFactory() }};
 
     [Fact]
     public void Deserialization_Is_Correct()
