@@ -22,7 +22,7 @@ public class IdentityConversionTests
 	[Fact]
 	public void Deserialization_Identity_Is_Correct()
 	{
-		var id = JsonSerializer.Deserialize<IdentityMock>(Json, this.JsonSerializerOptions);
+		var id = JsonSerializer.Deserialize<IdentityMock>(Json, this.JsonSerializerOptions)!;
 
 		Assert.Equal(typeof(IdentityMock), id.GetType());
 		Assert.Equal(Id.Value, id.Value);
