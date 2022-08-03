@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <VersionPrefix>0.6.2</VersionPrefix>
-        <PackageReleaseNotes>Updated packages.</PackageReleaseNotes>
+        <VersionPrefix>0.6.3</VersionPrefix>
+        <PackageReleaseNotes>Changed from multiple adapter per contract, to multiple domainobjects per contract. Updated package.</PackageReleaseNotes>
         <TargetFramework>net6.0</TargetFramework>
         <LangVersion>10</LangVersion>
     </PropertyGroup>

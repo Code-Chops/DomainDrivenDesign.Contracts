@@ -12,7 +12,7 @@ namespace CodeChops.DomainDrivenDesign.Contracts.Converters;
 public class AdaptingJsonConverter : JsonConverter<IDomainObject>
 {
 	private PolymorphicJsonConverter PolymorphicJsonConverter { get; }
-	private ImmutableDictionary<string, Adapter> AdaptersById { get; }
+	private ImmutableDictionary<string, Adapter> AdaptersByDomainObjectName { get; }
 	private ImmutableDictionary<Type, Adapter> AdaptersByDomainObjectType { get; }
 
 	public override bool CanConvert(Type typeToConvert) 
@@ -29,8 +29,7 @@ public class AdaptingJsonConverter : JsonConverter<IDomainObject>
 		
 		this.PolymorphicJsonConverter = new PolymorphicJsonConverter(polymorphicContracts);
 		
-		// Multiple adapters can be used on 1 contract.
-		this.AdaptersById = adapterList.ToImmutableDictionary(adapter => adapter.Id ?? throw new Exception($"Contract type on {adapter.GetType().Name} is null."));
+		this.AdaptersByDomainObjectName = adapterList.ToImmutableDictionary(adapter => adapter.DomainObjectName ?? throw new Exception($"Contract type on {adapter.GetType().Name} is null."));
 		this.AdaptersByDomainObjectType = adapterList.ToImmutableDictionary(adapter => adapter.GetDomainObjectType() ?? throw new Exception($"Domain object type on {adapter.GetType().Name} is null."));
 	}
 
@@ -39,12 +38,7 @@ public class AdaptingJsonConverter : JsonConverter<IDomainObject>
 		var contract = GetContract(ref reader);
 		var contractType = contract.GetType();
 		
-		// ReSharper disable once SuspiciousTypeConversion.Global
-		var adapterId = contract is IHasMultipleAdaptersContract multipleAdaptersContract 
-			? multipleAdaptersContract.AdapterId
-			: contractType.Name;
-		
-		if (!this.AdaptersById.TryGetValue(adapterId, out var adapter)) throw new KeyNotFoundException($"No injected {nameof(Adapter)} found for {contractType.Name} in {nameof(AdaptingJsonConverter)}.");
+		if (!this.AdaptersByDomainObjectName.TryGetValue(contractType.Name, out var adapter)) throw new KeyNotFoundException($"No injected {nameof(Adapter)} found for {contractType.Name} in {nameof(AdaptingJsonConverter)}.");
 		
 		// Convert it to a domain object using the correct adapter.
 		var domainObject = adapter.ConvertContractToDomainObject(contract);
