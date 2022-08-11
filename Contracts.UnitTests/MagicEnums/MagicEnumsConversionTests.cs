@@ -1,4 +1,5 @@
 ﻿using CodeChops.DomainDrivenDesign.Contracts.Converters.Numbers;
+using CodeChops.Geometry.Space.Directions.Strict;
 using CodeChops.Geometry.Space.Directions.Strict.Modes;
 using CodeChops.MagicEnums;
 
@@ -13,10 +14,12 @@ public class MagicEnumsConversionTests
 	
 	public MagicEnumsConversionTests()
 	{
+		var magicEnums = new IMagicEnum[] { new MagicEnumMock1(), new MagicEnumMock2() }.Concat(StrictDirectionEnum<int>.GetValues().Select(value => value.UninitializedInstance));
+		
 		this.JsonSerializerOptions = new()
 		{
 			WriteIndented = false,
-			Converters = { new MagicEnumJsonConverterFactory(new IMagicEnum[]{ new MagicEnumMock1(), new MagicEnumMock2(), new DiagonalDirectionMode<int>() }), new IdentityJsonConverterFactory() }
+			Converters = { new MagicEnumJsonConverterFactory(magicEnums), new IdentityJsonConverterFactory() }
 		};
 	}
 

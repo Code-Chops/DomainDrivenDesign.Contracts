@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <Title>CodeChops.DomainDrivenDesign.Contracts.UnitTests</Title>
+    <PropertyGroup Label="Main">
         <AssemblyName>CodeChops.DomainDrivenDesign.Contracts.UnitTests</AssemblyName>
         <RootNamespace>CodeChops.DomainDrivenDesign.Contracts.UnitTests</RootNamespace>
         <TargetFramework>net6.0</TargetFramework>
@@ -15,9 +14,13 @@
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     </PropertyGroup>
+    
+    <ItemGroup Label="ProjectReferences">
+        <ProjectReference Include="..\Contracts\DomainDrivenDesign.Contracts.csproj" />
+    </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="CodeChops.Geometry" Version="2.8.0" />
+    <ItemGroup Label="PackageReferences">
+        <PackageReference Include="CodeChops.Geometry" Version="2.8.1" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.0" />
         <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.3.0" />
         <PackageReference Include="xunit" Version="2.4.2" />
@@ -29,18 +32,8 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Codechops.DomainDrivenDesign.DomainModeling" Version="0.8.8" />
-        <PackageReference Include="Codechops.DomainDrivenDesign.Events" Version="0.0.6" />
+        <PackageReference Include="Codechops.DomainDrivenDesign.DomainModeling" Version="0.8.11" />
+        <PackageReference Include="Codechops.DomainDrivenDesign.Events" Version="0.0.7" />
     </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\Contracts\DomainDrivenDesign.Contracts.csproj" />
-    </ItemGroup>
-
-    <PropertyGroup>
-        <!-- CS1591: Missing XML comment for publicly visible type -->
-        <!-- CS1573: Undocumented public symbol while -doc compiler option is used -->
-        <!-- CA1822: Instance member does not access instance data and can be marked as static -->
-        <NoWarn>CS1591,CS1573,CA1822</NoWarn>
-    </PropertyGroup>
 </Project>
