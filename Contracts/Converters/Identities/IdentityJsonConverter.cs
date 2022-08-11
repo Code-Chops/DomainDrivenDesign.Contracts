@@ -5,7 +5,7 @@ using CodeChops.DomainDrivenDesign.DomainModeling.Identities;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.Converters.Identities;
 
-public class IdentityConverter<TId, TValue> : JsonConverter<TId>
+public class IdentityJsonConverter<TId, TValue> : JsonConverter<TId>
 	where TId : Id<TId, TValue>
 	where TValue : IEquatable<TValue>, IComparable<TValue>
 {
@@ -22,20 +22,15 @@ public class IdentityConverter<TId, TValue> : JsonConverter<TId>
 		if (reader.TokenType is not JsonTokenType.String and not JsonTokenType.Number) 
 			throw new JsonException($"Unexpected token found in JSON: {reader.TokenType}. Expected: {JsonTokenType.String}.");
 
-		var id = GetCachedUninitializedMember();
-		var propertyInfo = typeof(Id<TId, TValue>)!.GetProperty("_value", BindingFlags.Instance | BindingFlags.NonPublic)!;
+		var id = (TId)FormatterServices.GetUninitializedObject(typeof(TId));;
+		var propertyInfo = typeof(Id<TId, TValue>).GetProperty("_value", BindingFlags.Instance | BindingFlags.NonPublic)!;
 		var primitiveValue = DefaultConverter.Read(ref reader, typeof(TValue), options)!;
 		
 		propertyInfo.SetValue(id, primitiveValue, BindingFlags.Instance | BindingFlags.NonPublic, binder: null, index: null, CultureInfo.InvariantCulture );
 
 		return id;
-		
-	
-		static TId GetCachedUninitializedMember() => (TId)FormatterServices.GetUninitializedObject(typeof(TId));
 	}
 
-	public override void Write(Utf8JsonWriter writer, TId id, JsonSerializerOptions options)
-	{
-		DefaultConverter.Write(writer, (TValue)id, options);
-	}
+	public override void Write(Utf8JsonWriter writer, TId id, JsonSerializerOptions options) 
+		=> DefaultConverter.Write(writer, (TValue)id, options);
 }

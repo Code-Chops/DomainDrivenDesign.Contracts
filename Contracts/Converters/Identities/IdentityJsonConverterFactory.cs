@@ -12,9 +12,9 @@ public class IdentityJsonConverterFactory : JsonConverterFactory
 	public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
 	{
 		var genericBaseId = GetGenericBaseId(typeToConvert);
-		var idPrimitive = genericBaseId.GetGenericArguments()[1]!;
+		var idPrimitive = genericBaseId.GetGenericArguments()[1];
 		var converter = (JsonConverter)Activator.CreateInstance(
-			type: typeof(IdentityConverter<,>).MakeGenericType(typeToConvert, idPrimitive),
+			type: typeof(IdentityJsonConverter<,>).MakeGenericType(typeToConvert, idPrimitive),
 			bindingAttr: BindingFlags.Instance | BindingFlags.Public,
 			binder: null,
 			args: null,

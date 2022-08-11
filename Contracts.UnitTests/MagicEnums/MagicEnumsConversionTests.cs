@@ -1,4 +1,5 @@
-﻿using CodeChops.DomainDrivenDesign.Contracts.Converters.MagicEnums;
+﻿using CodeChops.DomainDrivenDesign.Contracts.Converters.Numbers;
+using CodeChops.Geometry.Space.Directions.Strict.Modes;
 using CodeChops.MagicEnums;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.MagicEnums;
@@ -6,7 +7,7 @@ namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.MagicEnums;
 public class MagicEnumsConversionTests
 {
 	private const string Json = @$"""{nameof(MagicEnumMock1)}.{nameof(MagicEnumMock1.Value2)}""";
-	private const string WrapperJson = @$"{{""Enum"":""{nameof(MagicEnumMock2)}.{nameof(MagicEnumMock2.Value3)}""}}";
+	private const string WrapperJson = @$"{{""{nameof(MagicEnumWrapperContractMock.Enum)}"":""{nameof(MagicEnumMock2)}.{nameof(MagicEnumMock2.Value3)}"",""Direction"":""DiagonalDirectionMode.SouthEast""}}";
 		
 	private JsonSerializerOptions JsonSerializerOptions { get; }
 	
@@ -15,7 +16,7 @@ public class MagicEnumsConversionTests
 		this.JsonSerializerOptions = new()
 		{
 			WriteIndented = false,
-			Converters = { new MagicEnumJsonConverter(new IMagicEnum[]{ new MagicEnumMock1(), new MagicEnumMock2()}) }
+			Converters = { new MagicEnumJsonConverterFactory(new IMagicEnum[]{ new MagicEnumMock1(), new MagicEnumMock2(), new DiagonalDirectionMode<int>() }), new IdentityJsonConverterFactory() }
 		};
 	}
 
@@ -51,7 +52,7 @@ public class MagicEnumsConversionTests
 	[Fact]
 	public void Serialization_MagicEnum_WithWrapper_ShouldWork()
 	{
-		var wrapper = new MagicEnumWrapperContractMock() { Enum = MagicEnumMock2.Value3 };
+		var wrapper = new MagicEnumWrapperContractMock(@enum: MagicEnumMock2.Value3, direction: DiagonalDirectionMode<int>.SouthEast);
 		var json = JsonSerializer.Serialize(wrapper, this.JsonSerializerOptions);
 		
 		Assert.Equal(WrapperJson, json);

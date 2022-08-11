@@ -5,7 +5,8 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.Converters.MagicEnums;
 
-public class MagicEnumJsonConverter : JsonConverter<IMagicEnum>
+public class MagicEnumJsonConverter<TMagicEnum> : JsonConverter<TMagicEnum>
+	where TMagicEnum : IMagicEnum
 {
 	public override bool CanConvert(Type typeToConvert) 
 		=> typeToConvert.IsAssignableTo(typeof(IMagicEnum));
@@ -14,13 +15,12 @@ public class MagicEnumJsonConverter : JsonConverter<IMagicEnum>
 	private ImmutableDictionary<string, IMagicEnum> EnumsByName { get; }
 	private const char EnumDelimiter = '.';
 
-	public MagicEnumJsonConverter(IEnumerable<IMagicEnum>? magicEnums = null)
+	public MagicEnumJsonConverter(IEnumerable<IMagicEnum> magicEnums)
 	{
-		magicEnums ??= Array.Empty<IMagicEnum>();
-		this.EnumsByName = magicEnums.ToImmutableDictionary(magicEnum => magicEnum.GetType().Name);
+		this.EnumsByName = magicEnums.ToImmutableDictionary(magicEnum => GetNameWithoutGenericParameters(magicEnum.GetType().Name));	
 	}
 
-	public override IMagicEnum? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+	public override TMagicEnum? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 	{
 		// Check for null values
 		if (reader.TokenType == JsonTokenType.Null) return default;
@@ -34,10 +34,6 @@ public class MagicEnumJsonConverter : JsonConverter<IMagicEnum>
 		var enumName = enumIdentifier[..delimiterIndex];
 		var enumMemberName = enumIdentifier[(delimiterIndex + 1)..];
 
-		//
-		// var expectedEnumName = GetNameWithoutGenericParameters(typeToConvert.Name); 
-		// if (enumName != expectedEnumName) throw new JsonException($"Incorrect enum name '{enumName}'. Expected '{expectedEnumName}'.");
-		
 		if (!GetSingleMemberMethodCache.TryGetValue(enumName, out MethodInfo? getSingleMemberMethod))
 		{
 			getSingleMemberMethod = RetrieveGetSingleMemberMethod(typeToConvert);
@@ -46,21 +42,18 @@ public class MagicEnumJsonConverter : JsonConverter<IMagicEnum>
 			if (getSingleMemberMethod is null)
 			{
 				if (!this.EnumsByName.TryGetValue(enumName, out var injectedEnum))
-				{
 					throw new JsonException($"Error while deserializing JSON for {typeToConvert.Name}. Unable to find the concrete MagicEnum. Did you forget to inject enum {enumName}?");
-				}
 
 				getSingleMemberMethod = RetrieveGetSingleMemberMethod(injectedEnum.GetType());
+
 				if (getSingleMemberMethod is null)
-				{
 					throw new JsonException($"Error while deserializing JSON for {typeToConvert.Name}. Unable to find the concrete MagicEnum. Did you inject the wrong enum {enumName}?");
-				}
 			}
 			
 			GetSingleMemberMethodCache.Set(enumName, getSingleMemberMethod);
 		}
 		
-		var magicEnum = (IMagicEnum)getSingleMemberMethod!.Invoke(obj: null, parameters: new object?[] { enumMemberName })!;
+		var magicEnum = (TMagicEnum)getSingleMemberMethod!.Invoke(obj: null, parameters: new object?[] { enumMemberName })!;
 		return magicEnum;
 
 
@@ -76,14 +69,14 @@ public class MagicEnumJsonConverter : JsonConverter<IMagicEnum>
 	
 	private static string GetNameWithoutGenericParameters(string name)
 	{
-		var indexOfLessThan = name.IndexOf('<');
+		var indexOfLessThan = name.IndexOf('`');
 		
 		return indexOfLessThan == -1
 			? name
 			: name[..indexOfLessThan];
 	}
 
-	public override void Write(Utf8JsonWriter writer, IMagicEnum magicEnum, JsonSerializerOptions options)
+	public override void Write(Utf8JsonWriter writer, TMagicEnum magicEnum, JsonSerializerOptions options)
 	{
 		var enumIdentifier = $"{GetNameWithoutGenericParameters(magicEnum.GetType().Name)}.{magicEnum}";
 		writer.WriteStringValue(enumIdentifier);

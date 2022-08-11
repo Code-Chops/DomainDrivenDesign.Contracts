@@ -16,9 +16,10 @@ public class PolymorphicJsonConverter : JsonConverter<PolymorphicContract>
 	public override bool CanConvert(Type typeToConvert) 
 		=> typeToConvert.IsAbstract && typeToConvert.IsAssignableTo(typeof(PolymorphicContract));
 
-	public PolymorphicJsonConverter(IEnumerable<PolymorphicContract> contracts)
+	public PolymorphicJsonConverter(IEnumerable<PolymorphicContract>? contracts = null)
 	{
-		this.ContractsByTypeId = contracts.ToImmutableDictionary(contract => contract.TypeId ?? throw new Exception($"Contract {contract} has an ID of null."));
+		contracts ??= Array.Empty<PolymorphicContract>();
+		this.ContractsByTypeId = contracts.ToImmutableDictionary(contract => contract.TypeId ?? throw new Exception($"Contract {contract} has an ID of invalid value null."));
 	}
 
 	/// <summary>
@@ -29,7 +30,8 @@ public class PolymorphicJsonConverter : JsonConverter<PolymorphicContract>
 		// Check for null values
 		if (reader.TokenType == JsonTokenType.Null) return default;
 
-		if (reader.TokenType != JsonTokenType.StartObject) throw new JsonException($"Unexpected token found in JSON: {reader.TokenType}. Expected: {JsonTokenType.StartObject}.");
+		if (reader.TokenType != JsonTokenType.StartObject) 
+			throw new JsonException($"Error during deserialization of {typeToConvert.Name} using {nameof(PolymorphicJsonConverter)}: Unexpected token found in JSON: {reader.TokenType}. Expected: {JsonTokenType.StartObject}.");
 
 		// Copy the current state from reader (it's a struct).
 		var readerAtStart = reader;
@@ -39,14 +41,21 @@ public class PolymorphicJsonConverter : JsonConverter<PolymorphicContract>
 		var id = jsonDocument.RootElement.GetProperty(nameof(PolymorphicContract.TypeId)).GetString();
 
 		// See if that class can be deserialized or not.
-		if (String.IsNullOrEmpty(id) || !this.ContractsByTypeId.TryGetValue(id, out var contract))
+		if (String.IsNullOrEmpty(id))
+			throw new NotSupportedException($"Error during deserialization of {typeToConvert.Name} using {nameof(PolymorphicJsonConverter)}: ID is empty.");
+
+		if (!this.ContractsByTypeId.TryGetValue(id, out var contract))
 		{
-			throw new NotSupportedException($"{id ?? "<unknown>"} can not be deserialized");
+			// It is possible that the ID refers to a MagicEnum. In that case the name of the enum should be stripped, and only the member name should be used.
+			if (!this.ContractsByTypeId.TryGetValue(id[(id.IndexOf('.') + 1)..], out contract))
+				throw new NotSupportedException($"Error during deserialization of {typeToConvert.Name} using {nameof(PolymorphicJsonConverter)}: unable to deserialize because ID {id} is not found in the provided contracts.");
 		}
 
 		// Deserialize it.
-		var value = (PolymorphicContract?)JsonSerializer.Deserialize(ref readerAtStart, contract.GetType(), options) ?? throw new JsonException("Error during retrieval of JSON value.");
-		return value;
+		var value = JsonSerializer.Deserialize(ref readerAtStart, contract.GetType(), options);
+		if (value is null) throw new JsonException($"Error during deserialization of {typeToConvert.Name} using {nameof(PolymorphicJsonConverter)}.");
+				
+		return (PolymorphicContract)value;
 	}
 
 	public override void Write(Utf8JsonWriter writer, PolymorphicContract objectToWrite, JsonSerializerOptions options)
