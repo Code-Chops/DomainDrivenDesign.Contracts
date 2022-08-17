@@ -33,6 +33,8 @@ public abstract record Adapter<TContract> : Adapter
 /// </summary>
 public abstract record Adapter
 {
+	public override string ToString() => $"{this.GetType().Name} {{ {nameof(this.DomainObjectName)} = {this.DomainObjectName} }}";
+	
 	public abstract string DomainObjectName { get; }
 
 	/// <summary>

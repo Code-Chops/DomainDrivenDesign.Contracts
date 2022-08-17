@@ -1,8 +1,7 @@
 ﻿using System.Reflection;
-using CodeChops.DomainDrivenDesign.Contracts.Converters.MagicEnums;
 using CodeChops.MagicEnums;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.Converters.Numbers;
+namespace CodeChops.DomainDrivenDesign.Contracts.Converters.MagicEnums;
 
 public class MagicEnumJsonConverterFactory : JsonConverterFactory
 {
@@ -15,7 +14,7 @@ public class MagicEnumJsonConverterFactory : JsonConverterFactory
 			type: typeof(MagicEnumJsonConverter<>).MakeGenericType(typeToConvert),
 			bindingAttr: BindingFlags.Instance | BindingFlags.Public,
 			binder: null,
-			args: new[] { this.MagicEnums },
+			args: new object[] { this.MagicEnums },
 			culture: null)!;
 
 		return converter;
@@ -27,5 +26,4 @@ public class MagicEnumJsonConverterFactory : JsonConverterFactory
 	{
 		this.MagicEnums = magicEnums?.ToList() ?? new List<IMagicEnum>();
 	}
-
 }

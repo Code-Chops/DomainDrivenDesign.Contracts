@@ -11,8 +11,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <VersionPrefix>0.7.1</VersionPrefix>
-        <PackageReleaseNotes>Cleanup project files.</PackageReleaseNotes>
+        <VersionPrefix>0.8.0</VersionPrefix>
+        <PackageReleaseNotes>Enhancements.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.DomainDrivenDesign.Contracts</Title>
         <Description>Easy use of contracts, adapters and polymorphism, using JSON.</Description>
@@ -49,8 +49,9 @@
     </ItemGroup>
 
     <ItemGroup Label="PackageReferences">
-        <PackageReference Include="Codechops.DomainDrivenDesign.DomainModeling" Version="0.8.11" />
-        <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.18.5" />
+        <PackageReference Include="Codechops.DomainDrivenDesign.DomainModeling" Version="0.11.1" />
+        <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.19.1" />
+        <PackageReference Include="CodeChops.MagicEnums" Version="2.4.2" />
         <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
     </ItemGroup>
 

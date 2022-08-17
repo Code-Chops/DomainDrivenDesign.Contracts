@@ -1,4 +1,4 @@
-﻿using CodeChops.DomainDrivenDesign.Contracts.Converters.Numbers;
+﻿using CodeChops.DomainDrivenDesign.Contracts.Converters.Identities;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Identities;
 

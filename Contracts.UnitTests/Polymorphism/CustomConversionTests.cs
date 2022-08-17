@@ -1,4 +1,5 @@
-using CodeChops.DomainDrivenDesign.Contracts.Converters.Numbers;
+using CodeChops.DomainDrivenDesign.Contracts.Converters.Identities;
+using CodeChops.DomainDrivenDesign.Contracts.Converters.MagicEnums;
 using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism;

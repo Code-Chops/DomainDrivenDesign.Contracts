@@ -19,7 +19,7 @@ public class NumberJsonConverter<TNumber> : JsonConverter<Number<TNumber>>
 		if (typeCode != TypeCode.Object && typeCode != ExpectedTypeCode) throw new JsonException($"Can't convert {typeCode} to {ExpectedTypeCode}.");
 
 		var number = DefaultConverter.Read(ref reader, typeof(TNumber), options);
-		return number;
+		return (Number<TNumber>)number;
 	}
 
 	public override void Write(Utf8JsonWriter writer, Number<TNumber> number, JsonSerializerOptions options)

@@ -22,7 +22,7 @@ public class IdentityJsonConverter<TId, TValue> : JsonConverter<TId>
 		if (reader.TokenType is not JsonTokenType.String and not JsonTokenType.Number) 
 			throw new JsonException($"Unexpected token found in JSON: {reader.TokenType}. Expected: {JsonTokenType.String}.");
 
-		var id = (TId)FormatterServices.GetUninitializedObject(typeof(TId));;
+		var id = (TId)FormatterServices.GetUninitializedObject(typeof(TId));
 		var propertyInfo = typeof(Id<TId, TValue>).GetProperty("_value", BindingFlags.Instance | BindingFlags.NonPublic)!;
 		var primitiveValue = DefaultConverter.Read(ref reader, typeof(TValue), options)!;
 		

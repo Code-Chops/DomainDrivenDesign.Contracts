@@ -17,7 +17,7 @@ public class MagicEnumJsonConverter<TMagicEnum> : JsonConverter<TMagicEnum>
 
 	public MagicEnumJsonConverter(IEnumerable<IMagicEnum> magicEnums)
 	{
-		this.EnumsByName = magicEnums.ToImmutableDictionary(magicEnum => GetNameWithoutGenericParameters(magicEnum.GetType().Name));	
+		this.EnumsByName = magicEnums.ToImmutableDictionary(GetEnumName);	
 	}
 
 	public override TMagicEnum? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -67,8 +67,9 @@ public class MagicEnumJsonConverter<TMagicEnum> : JsonConverter<TMagicEnum>
 		}
 	}
 	
-	private static string GetNameWithoutGenericParameters(string name)
+	private static string GetEnumName(IMagicEnum magicEnum)
 	{
+		var name = magicEnum.GetType().Name;
 		var indexOfLessThan = name.IndexOf('`');
 		
 		return indexOfLessThan == -1
@@ -76,12 +77,9 @@ public class MagicEnumJsonConverter<TMagicEnum> : JsonConverter<TMagicEnum>
 			: name[..indexOfLessThan];
 	}
 
-	public override void Write(Utf8JsonWriter writer, TMagicEnum magicEnum, JsonSerializerOptions options)
-	{
-		var enumIdentifier = $"{GetNameWithoutGenericParameters(magicEnum.GetType().Name)}.{magicEnum}";
-		writer.WriteStringValue(enumIdentifier);
-	}
-	
+	public override void Write(Utf8JsonWriter writer, TMagicEnum magicEnum, JsonSerializerOptions options) 
+		=> writer.WriteStringValue($"{GetEnumName(magicEnum)}{EnumDelimiter}{magicEnum.Name}");
+
 	// ReSharper disable once ClassNeverInstantiated.Local
 	private record MagicEnumDummy : MagicEnum<MagicEnumDummy>;
 }
