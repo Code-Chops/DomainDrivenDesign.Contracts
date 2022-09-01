@@ -6,7 +6,7 @@ namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Geometry;
 
 public class PointTests
 {
-	private static PointMock PointMock { get; } = new() { Point = (1, 7) };
+	private static PointMock PointMock { get; } = new() { Point = (1D, 7D) };
 	private const string Json = "{\"Point\":{\"X\":1,\"Y\":7}}";
 	private static JsonSerializerOptions JsonSerializerOptions { get; } = new()
 	{

@@ -23,7 +23,7 @@ public class IdentityJsonConverter<TId, TValue> : JsonConverter<TId>
 			throw new JsonException($"Unexpected token found in JSON: {reader.TokenType}. Expected: {JsonTokenType.String}.");
 
 		var id = (TId)FormatterServices.GetUninitializedObject(typeof(TId));
-		var propertyInfo = typeof(Id<TId, TValue>).GetProperty("_value", BindingFlags.Instance | BindingFlags.NonPublic)!;
+		var propertyInfo = typeof(Id<TId, TValue>).GetProperty(nameof(Id<TId, TValue>.Value), BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty)!;
 		var primitiveValue = DefaultConverter.Read(ref reader, typeof(TValue), options)!;
 		
 		propertyInfo.SetValue(id, primitiveValue, BindingFlags.Instance | BindingFlags.NonPublic, binder: null, index: null, CultureInfo.InvariantCulture );

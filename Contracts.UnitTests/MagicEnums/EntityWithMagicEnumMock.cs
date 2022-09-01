@@ -1,7 +1,9 @@
 ﻿namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.MagicEnums;
 
-public class EntityWithMagicEnumMock : IDomainObject
+public class EntityWithMagicEnumMock : Entity
 {
+	public override SingletonId<EntityWithMagicEnumMock> Id => SingletonId<EntityWithMagicEnumMock>.Instance;
+	
 	public int Age { get; init; }
 	public MagicEnumWrapperContractMock Wrapper { get; init; } = null!;
 }
