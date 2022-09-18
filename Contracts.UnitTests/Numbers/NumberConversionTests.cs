@@ -1,5 +1,5 @@
-﻿using CodeChops.DomainDrivenDesign.Contracts.Converters.Numbers;
-using CodeChops.GenericMath;
+﻿using CodeChops.GenericMath;
+using CodeChops.GenericMath.Serialization;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Numbers;
 

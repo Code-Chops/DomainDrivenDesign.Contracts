@@ -1,6 +1,6 @@
-﻿using CodeChops.DomainDrivenDesign.Contracts.Converters.Numbers;
-using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
+﻿using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
 using CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism;
+using CodeChops.GenericMath.Serialization;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Geometry;
 
