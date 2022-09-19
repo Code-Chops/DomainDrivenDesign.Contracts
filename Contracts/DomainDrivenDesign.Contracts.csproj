@@ -11,8 +11,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <VersionPrefix>0.9.0</VersionPrefix>
-        <PackageReleaseNotes>Moved converters and unit tests to their own package.</PackageReleaseNotes>
+        <VersionPrefix>0.9.1</VersionPrefix>
+        <PackageReleaseNotes>Re-added polymorphic point tests.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.DomainDrivenDesign.Contracts</Title>
         <Description>Easy use of contracts, adapters and polymorphism, using JSON.</Description>
