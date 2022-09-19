@@ -11,8 +11,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <VersionPrefix>0.8.3</VersionPrefix>
-        <PackageReleaseNotes>Updated packages.</PackageReleaseNotes>
+        <VersionPrefix>0.9.0</VersionPrefix>
+        <PackageReleaseNotes>Moved converters and unit tests to their own package.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.DomainDrivenDesign.Contracts</Title>
         <Description>Easy use of contracts, adapters and polymorphism, using JSON.</Description>
@@ -49,18 +49,15 @@
     </ItemGroup>
 
     <ItemGroup Label="PackageReferences">
-        <PackageReference Include="Codechops.DomainDrivenDesign.DomainModeling" Version="0.23.8" />
+        <PackageReference Include="Codechops.DomainDrivenDesign.DomainModeling" Version="0.23.11" />
         <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.20.8" />
-        <PackageReference Include="CodeChops.MagicEnums" Version="2.9.9" />
         <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="ErrorCodes" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Remove="ErrorCodes\ErrorCode.cs" />
+      <Compile Remove="Converters\Identities\IdentityJsonConverter.cs" />
+      <Compile Remove="Converters\MagicEnums\MagicEnumJsonConverter.cs" />
     </ItemGroup>
 
 </Project>

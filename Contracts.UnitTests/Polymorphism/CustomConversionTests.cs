@@ -1,6 +1,5 @@
-using CodeChops.DomainDrivenDesign.Contracts.Converters.Identities;
-using CodeChops.DomainDrivenDesign.Contracts.Converters.MagicEnums;
 using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
+using CodeChops.MagicEnums.Json;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism;
 
@@ -13,7 +12,7 @@ public class CustomPolymorphicJsonConversionTests
         WriteIndented = false, 
         Converters =
         {
-            new PolymorphicJsonConverter(PointContractEnum.GetValues().Select(value => value.UninitializedInstance)), new MagicEnumJsonConverterFactory(new [] { new PointContractEnum()}), new IdentityJsonConverterFactory()
+            new PolymorphicJsonConverter(PointContractEnum.GetValues().Select(value => value.UninitializedInstance)), new MagicEnumJsonConverterFactory()
         }
     };
 
