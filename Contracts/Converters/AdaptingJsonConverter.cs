@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Runtime.Serialization;
 using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
-using CodeChops.DomainDrivenDesign.DomainModeling;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.Converters;
 

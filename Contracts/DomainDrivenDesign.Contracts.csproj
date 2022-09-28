@@ -11,8 +11,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <VersionPrefix>0.9.1</VersionPrefix>
-        <PackageReleaseNotes>Re-added polymorphic point tests.</PackageReleaseNotes>
+        <VersionPrefix>0.9.2</VersionPrefix>
+        <PackageReleaseNotes>Updated package references.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.DomainDrivenDesign.Contracts</Title>
         <Description>Easy use of contracts, adapters and polymorphism, using JSON.</Description>
@@ -49,8 +49,8 @@
     </ItemGroup>
 
     <ItemGroup Label="PackageReferences">
-        <PackageReference Include="Codechops.DomainDrivenDesign.DomainModeling" Version="0.23.11" />
-        <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.20.8" />
+        <PackageReference Include="Codechops.DomainDrivenDesign.DomainModeling" Version="0.29.3" />
+        <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.20.15" />
         <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
     </ItemGroup>
 

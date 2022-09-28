@@ -1,6 +1,4 @@
-﻿using CodeChops.DomainDrivenDesign.DomainModeling;
-
-namespace CodeChops.DomainDrivenDesign.Contracts;
+﻿namespace CodeChops.DomainDrivenDesign.Contracts;
 
 /// <summary>
 /// Provides a way to convert a domain object to a contract and vice versa, using a domain object with a type discriminator.
