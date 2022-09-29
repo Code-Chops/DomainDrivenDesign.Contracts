@@ -11,8 +11,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <VersionPrefix>0.9.3</VersionPrefix>
-        <PackageReleaseNotes>Updated package references.</PackageReleaseNotes>
+        <VersionPrefix>0.10.0</VersionPrefix>
+        <PackageReleaseNotes>Renamed TypeId to ImplementationId.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.DomainDrivenDesign.Contracts</Title>
         <Description>Easy use of contracts, adapters and polymorphism, using JSON.</Description>
@@ -50,7 +50,7 @@
 
     <ItemGroup Label="PackageReferences">
         <PackageReference Include="Codechops.DomainDrivenDesign.DomainModeling" Version="0.29.4" />
-        <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.22.0" />
+        <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.23.0" />
         <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
     </ItemGroup>
 
