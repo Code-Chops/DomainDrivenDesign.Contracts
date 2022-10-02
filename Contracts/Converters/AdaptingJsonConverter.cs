@@ -8,7 +8,7 @@ namespace CodeChops.DomainDrivenDesign.Contracts.Converters;
 /// This contract to domain converter can convert domain objects to JSON (et vice versa).
 /// Uses an injected <see cref="PolymorphicJsonConverter"/> and <see cref="Adapter{TPolymorphicContract}"/>(s).
 /// </summary>
-public class AdaptingJsonConverter : JsonConverter<IDomainObject>
+public sealed class AdaptingJsonConverter : JsonConverter<IDomainObject>
 {
 	private PolymorphicJsonConverter PolymorphicJsonConverter { get; }
 	private ImmutableDictionary<string, Adapter> AdaptersByDomainObjectName { get; }

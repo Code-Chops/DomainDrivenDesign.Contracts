@@ -1,5 +1,5 @@
 using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
-using CodeChops.ImplementationDiscovery.Attributes;
+using CodeChops.ImplementationDiscovery;
 
 namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism;
 
