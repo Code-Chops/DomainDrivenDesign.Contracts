@@ -6,7 +6,7 @@ namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism;
 public class CustomPolymorphicJsonConversionTests
 {
     private static Point3DContractMock Point3D { get; } = new(1, 2, 3);
-    private const string ExpectedJson = $@"{{""{nameof(Point3D.Z)}"":3,""{nameof(PolymorphicContract.ImplementationId)}"":""{nameof(PointContractEnum)}.{nameof(Point3DContractMock)}"",""{nameof(Point3D.X)}"":1,""{nameof(Point3D.Y)}"":2}}";
+    private const string ExpectedJson = $@"{{""{nameof(Point3D.Z)}"":3,""{nameof(Point3D.X)}"":1,""{nameof(Point3D.Y)}"":2,""{nameof(PolymorphicContract.ImplementationId)}"":""{nameof(Point3DContractMock)}""}}";
     private static JsonSerializerOptions JsonSerializerOptions { get; } = new()
     {
         WriteIndented = false, 
