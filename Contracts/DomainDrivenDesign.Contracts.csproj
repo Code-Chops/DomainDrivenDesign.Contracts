@@ -11,8 +11,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <VersionPrefix>0.12.13</VersionPrefix>
-        <PackageReleaseNotes>Updated package references 15.</PackageReleaseNotes>
+        <VersionPrefix>0.12.14</VersionPrefix>
+        <PackageReleaseNotes>Updated package references 16.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.DomainDrivenDesign.Contracts</Title>
         <Description>Easy use of contracts, adapters and polymorphism, using JSON.</Description>
