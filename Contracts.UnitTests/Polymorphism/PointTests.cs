@@ -12,7 +12,7 @@ public class PointTests
 		WriteIndented = false,
 		Converters =
 		{
-			new PolymorphicJsonConverter(PointContractEnum.GetValues().Select(value => value.UninitializedInstance)), new NumberJsonConverterFactory()
+			new PolymorphicJsonConverter(PointContractEnum.GetDiscoveredObjects()), new NumberJsonConverterFactory()
 		}
 	};
 
