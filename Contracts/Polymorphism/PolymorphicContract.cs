@@ -1,3 +1,5 @@
+using CodeChops.DomainDrivenDesign.Contracts.Contracts;
+
 namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
 
 public abstract record PolymorphicContract : Contract
