@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using CodeChops.DomainDrivenDesign.Contracts.Contracts;
 
 namespace CodeChops.DomainDrivenDesign.Contracts;
 

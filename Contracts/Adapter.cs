@@ -1,6 +1,4 @@
-﻿using CodeChops.DomainDrivenDesign.Contracts.Contracts;
-
-namespace CodeChops.DomainDrivenDesign.Contracts;
+﻿namespace CodeChops.DomainDrivenDesign.Contracts;
 
 /// <summary>
 /// Provides a way to convert a domain object to a contract and vice versa, using a domain object with a type discriminator.
@@ -24,7 +22,7 @@ public abstract record Adapter<TContract> : Adapter
 	public override string DomainObjectName { get; } = typeof(TContract).Name;
 
 	protected internal override Type GetContractType() => typeof(TContract);
-
+	
 	protected internal abstract override TContract ConvertDomainObjectToContract(IDomainObject domainObject);
 }
 

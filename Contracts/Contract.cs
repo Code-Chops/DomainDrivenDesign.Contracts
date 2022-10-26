@@ -1,4 +1,4 @@
-﻿namespace CodeChops.DomainDrivenDesign.Contracts.Contracts;
+﻿namespace CodeChops.DomainDrivenDesign.Contracts;
 
 public abstract record Contract
 {
