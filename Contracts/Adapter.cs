@@ -3,9 +3,9 @@
 /// <summary>
 /// Provides a way to convert a domain object to a contract and vice versa, using a domain object with a type discriminator.
 /// </summary>
-public abstract record Adapter<TContract, TDomainObject> : Adapter<TContract>
-	where TContract : Contract
+public abstract record Adapter<TDomainObject, TContract> : Adapter<TContract>
 	where TDomainObject : IDomainObject
+	where TContract : Contract
 {
 	/// <summary>
 	/// The contract is tightly coupled to 1 domain object type.

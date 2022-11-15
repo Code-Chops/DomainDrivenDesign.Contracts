@@ -1,6 +1,6 @@
 ﻿namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Adapters;
 
-public record UserAdapterMock : Adapter<UserContractMock, UserEntityMock>
+public record UserAdapterMock : Adapter<UserEntityMock, UserContractMock>
 {
 	protected internal override UserContractMock ConvertDomainObjectToContract(IDomainObject domainObject)
 		=> new(((UserEntityMock)domainObject).Name);
