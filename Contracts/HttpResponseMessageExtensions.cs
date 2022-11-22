@@ -11,6 +11,7 @@ public static class HttpResponseMessageExtensions
 		if (message.ContainsUserException(out var code))
 			throw new InvalidOperationException($"Unexpected user friendly HTTP error {code} during request. Did you forget to handle user exceptions? Request content: {await message.RequestMessage?.Content?.ReadAsStringAsync(cancellationToken)!}.");
 		
+		options ??= JsonSerializerOptions.Default;
 		return await message.Content.ReadFromJsonAsync<TContract>(options, cancellationToken)
 			?? throw new InvalidOperationException($"Unexpected error during deserialization to contract {typeof(TContract).Name}? Response content: {await message.Content.ReadAsStringAsync(cancellationToken)}.");
 	}

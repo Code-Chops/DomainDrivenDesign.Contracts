@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <VersionPrefix>0.13.3</VersionPrefix>
-        <PackageReleaseNotes>Updated packages and removed Enable Preview Features. Added ValidationException adapter.</PackageReleaseNotes>
+        <VersionPrefix>0.14.0</VersionPrefix>
+        <PackageReleaseNotes>Added ValidationException support.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.DomainDrivenDesign.Contracts</Title>
         <Description>Easy use of contracts, adapters and polymorphism, using JSON.</Description>
@@ -48,9 +48,12 @@
     </ItemGroup>
 
     <ItemGroup Label="PackageReferences">
-        <PackageReference Include="Codechops.DomainDrivenDesign.DomainModeling" Version="1.4.7" />
-        <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.35.2" />
+        <PackageReference Include="Codechops.DomainDrivenDesign.DomainModeling" Version="1.5.3" />
+        <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.35.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>

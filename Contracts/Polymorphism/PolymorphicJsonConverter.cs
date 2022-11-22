@@ -1,6 +1,4 @@
-﻿using System.Collections.Immutable;
-
-namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
+﻿namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
 
 /// <summary>
 /// This polymorphic domain converter can convert:
