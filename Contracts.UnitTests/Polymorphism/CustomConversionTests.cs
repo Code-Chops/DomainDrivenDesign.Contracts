@@ -12,7 +12,7 @@ public class CustomPolymorphicJsonConversionTests
         WriteIndented = false, 
         Converters =
         {
-            new PolymorphicJsonConverter(PointContractEnum.GetDiscoveredObjects()), new MagicEnumJsonConverterFactory()
+            new PolymorphicJsonConverter(PointContractEnum.GetInstances()), new MagicEnumJsonConverterFactory()
         }
     };
 

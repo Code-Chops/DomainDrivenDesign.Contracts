@@ -7,8 +7,8 @@ public record ValidationExceptionAdapter : Adapter<ValidationException, Validati
 			? new ValidationExceptionContract()
 				{
 					ErrorCode = exception.ErrorCode,
-					Parameters = exception.ValidationMessage.Parameters, 
-					Message = exception.ValidationMessage.Message,
+					Parameters = exception.ExternalMessage.Parameters, 
+					Message = exception.ExternalMessage.Message,
 				}
 			: throw new InvalidOperationException($"Cannot convert {nameof(ValidationException)} to {nameof(ValidationExceptionContract)}. Domain object is not of type {typeof(ValidationException)}.");
 
