@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
-using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
+using CodeChops.Contracts.Polymorphism;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.Converters;
+namespace CodeChops.Contracts.Converters;
 
 /// <summary>
 /// This contract to domain converter can convert domain objects to JSON (et vice versa).

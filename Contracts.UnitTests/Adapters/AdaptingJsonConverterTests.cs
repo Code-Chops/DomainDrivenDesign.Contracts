@@ -1,6 +1,6 @@
-﻿using CodeChops.DomainDrivenDesign.Contracts.Converters;
+﻿using CodeChops.Contracts.Converters;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Adapters;
+namespace CodeChops.Contracts.UnitTests.Adapters;
 
 public class AdaptingJsonConverterTests
 {

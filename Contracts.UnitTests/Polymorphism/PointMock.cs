@@ -1,6 +1,6 @@
 ﻿using CodeChops.Geometry.Space.Points;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism;
+namespace CodeChops.Contracts.UnitTests.Polymorphism;
 
 public class PointMock
 {

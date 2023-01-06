@@ -1,4 +1,4 @@
-﻿namespace CodeChops.DomainDrivenDesign.Contracts;
+﻿namespace CodeChops.Contracts;
 
 public interface ICanReturnSimpleUserException
 {

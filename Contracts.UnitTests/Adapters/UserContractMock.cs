@@ -1,3 +1,3 @@
-﻿namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Adapters;
+﻿namespace CodeChops.Contracts.UnitTests.Adapters;
 
 public record UserContractMock(string Name) : Contract;

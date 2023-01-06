@@ -1,4 +1,4 @@
-﻿namespace CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
+﻿namespace CodeChops.Contracts.Polymorphism;
 
 /// <summary>
 /// This polymorphic domain converter can convert:

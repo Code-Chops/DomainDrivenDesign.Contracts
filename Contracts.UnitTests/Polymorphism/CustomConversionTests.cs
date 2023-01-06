@@ -1,7 +1,7 @@
-using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
+using CodeChops.Contracts.Polymorphism;
 using CodeChops.MagicEnums.Json;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism;
+namespace CodeChops.Contracts.UnitTests.Polymorphism;
 
 public class CustomPolymorphicJsonConversionTests
 {

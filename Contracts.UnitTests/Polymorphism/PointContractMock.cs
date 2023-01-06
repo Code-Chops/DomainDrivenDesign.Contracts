@@ -1,7 +1,7 @@
-using CodeChops.DomainDrivenDesign.Contracts.Polymorphism;
+using CodeChops.Contracts.Polymorphism;
 using CodeChops.ImplementationDiscovery;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.UnitTests.Polymorphism;
+namespace CodeChops.Contracts.UnitTests.Polymorphism;
 
 [DiscoverImplementations(generateImplementationIds: true)]
 public abstract partial record PointContract : PolymorphicContract;

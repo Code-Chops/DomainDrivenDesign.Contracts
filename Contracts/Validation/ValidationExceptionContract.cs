@@ -1,4 +1,4 @@
-﻿namespace CodeChops.DomainDrivenDesign.Contracts.Validation;
+﻿namespace CodeChops.Contracts.Validation;
 
 public record ValidationExceptionContract : Contract
 {

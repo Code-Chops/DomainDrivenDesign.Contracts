@@ -1,4 +1,4 @@
-﻿namespace CodeChops.DomainDrivenDesign.Contracts.Validation;
+﻿namespace CodeChops.Contracts.Validation;
 
 public record ValidationExceptionAdapter : Adapter<ValidationException, ValidationExceptionContract>
 {
@@ -14,6 +14,6 @@ public record ValidationExceptionAdapter : Adapter<ValidationException, Validati
 
 	protected internal override IDomainObject ConvertContractToDomainObject(Contract contract) 
 		=> contract is ValidationExceptionContract validationContract 
-			? new ValidationException(validationContract.ErrorCode, new ValidationExceptionMessage(message: validationContract.Message, parameters: validationContract.Parameters.ToList()))
+			? new ValidationException(validationContract.ErrorCode, new ValidationExceptionMessage((validationContract.Message, validationContract.Parameters.ToImmutableList())!))
 			: throw new InvalidOperationException($"Cannot convert {nameof(ValidationExceptionContract)} to {nameof(ValidationException)}. Contract is not of type {typeof(ValidationExceptionContract)}.");
 }

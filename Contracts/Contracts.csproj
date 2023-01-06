@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup Label="Main">
-        <AssemblyName>CodeChops.DomainDrivenDesign.Contracts</AssemblyName>
-        <RootNamespace>CodeChops.DomainDrivenDesign.Contracts</RootNamespace>
+        <AssemblyName>CodeChops.Contracts</AssemblyName>
+        <RootNamespace>CodeChops.Contracts</RootNamespace>
         <TargetFramework>net7.0</TargetFramework>
         <LangVersion>11</LangVersion>
         <Nullable>enable</Nullable>
@@ -10,15 +10,15 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <VersionPrefix>0.14.1</VersionPrefix>
+        <VersionPrefix>0.15.0</VersionPrefix>
         <PackageReleaseNotes>Updated package references.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Title>CodeChops.DomainDrivenDesign.Contracts</Title>
+        <Title>CodeChops.Contracts</Title>
         <Description>Easy use of contracts, adapters and polymorphism, using JSON.</Description>
-        <PackageId>CodeChops.DomainDrivenDesign.Contracts</PackageId>
-        <PackageProjectUrl>https://github.com/code-chops/DomainDrivenDesign.Contracts</PackageProjectUrl>
-        <PackageTags>CodeChops;CodeChops.DomainDrivenDesign.Contracts;DomainDrivenDesign.Contracts;Contracts;</PackageTags>
-        <RepositoryUrl>https://github.com/code-chops/DomainDrivenDesign.Contracts</RepositoryUrl>
+        <PackageId>CodeChops.Contracts</PackageId>
+        <PackageProjectUrl>https://github.com/code-chops/Contracts</PackageProjectUrl>
+        <PackageTags>CodeChops;CodeChops.Contracts;Contracts;Contracts;</PackageTags>
+        <RepositoryUrl>https://github.com/code-chops/Contracts</RepositoryUrl>
         <RepositoryType>Git</RepositoryType>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <Authors>CodeChops (@Code-Chops), Max Bergman</Authors>
@@ -48,8 +48,8 @@
     </ItemGroup>
 
     <ItemGroup Label="PackageReferences">
-        <PackageReference Include="Codechops.DomainDrivenDesign.DomainModeling" Version="1.6.8" />
-        <PackageReference Include="CodeChops.ImplementationDiscovery" Version="0.38.2" />
+        <PackageReference Include="CodeChops.DomainModeling" Version="2.0.1" />
+        <PackageReference Include="CodeChops.ImplementationDiscovery" Version="1.1.1" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.Abstractions" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />

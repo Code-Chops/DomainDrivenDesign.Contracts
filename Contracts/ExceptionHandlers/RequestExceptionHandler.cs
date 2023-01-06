@@ -1,11 +1,11 @@
 ﻿using System.Net;
-using CodeChops.DomainDrivenDesign.Contracts.Validation;
+using CodeChops.Contracts.Validation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace CodeChops.DomainDrivenDesign.Contracts.ExceptionHandlers;
+namespace CodeChops.Contracts.ExceptionHandlers;
 
 /// <summary>
 /// A global handler for uncaught exceptions during request handling.
