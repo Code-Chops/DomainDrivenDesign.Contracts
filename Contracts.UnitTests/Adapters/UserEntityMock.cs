@@ -1,7 +1,7 @@
 ﻿namespace CodeChops.Contracts.UnitTests.Adapters;
 
-[GenerateIdentity]
-public partial class UserEntityMock : Entity
+[GenerateIdentity(name: nameof(UserEntityMockId))]
+public partial class UserEntityMock : Entity<UserEntityMockId>
 {
 	public string Name { get; }
 
