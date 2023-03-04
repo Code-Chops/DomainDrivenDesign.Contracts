@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <VersionPrefix>0.15.4</VersionPrefix>
-        <PackageReleaseNotes>Updated package references 4.</PackageReleaseNotes>
+        <VersionPrefix>0.16.0</VersionPrefix>
+        <PackageReleaseNotes>Added collection contract and paging.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.Contracts</Title>
         <Description>Easy use of contracts, adapters and polymorphism, using JSON.</Description>
@@ -48,7 +48,7 @@
     </ItemGroup>
 
     <ItemGroup Label="PackageReferences">
-        <PackageReference Include="CodeChops.DomainModeling" Version="2.8.3" />
+        <PackageReference Include="CodeChops.DomainModeling" Version="2.9.1" />
         <PackageReference Include="CodeChops.ImplementationDiscovery" Version="1.8.2" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.Abstractions" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
