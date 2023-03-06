@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <VersionPrefix>0.19.1</VersionPrefix>
-        <PackageReleaseNotes>Enhanced PagingFilter with DefaultSize.</PackageReleaseNotes>
+        <VersionPrefix>0.21.0</VersionPrefix>
+        <PackageReleaseNotes>Created FilterWithPaging.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.Contracts</Title>
         <Description>Easy use of contracts, adapters and polymorphism, using JSON.</Description>

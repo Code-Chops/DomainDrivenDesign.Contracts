@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 
-namespace CodeChops.Contracts;
+namespace CodeChops.Contracts.ExceptionHandlers;
 
 public static class HttpResponseMessageExtensions
 {

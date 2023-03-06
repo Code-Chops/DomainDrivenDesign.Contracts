@@ -1,6 +1,11 @@
 ﻿namespace CodeChops.Contracts.Paging;
 
-public interface IPagingFilter
+/// <summary>
+/// For filtering out a page of a collection. 
+/// </summary>
+public interface IPagingFilter<TSource>
 {
-	public static abstract int DefaultSize { get; }
+	public static abstract int DefaultPageSize { get; }
+	
+	IQueryable<TSource> ApplyPaging(IQueryable<TSource> shows);
 }

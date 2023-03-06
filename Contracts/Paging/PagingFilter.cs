@@ -1,12 +1,11 @@
 ﻿namespace CodeChops.Contracts.Paging;
 
-/// <inheritdoc cref="PagingFilter"/>
-public record PagingFilter<TSelf> : PagingFilter, IHasDefault<PagingFilter<TSelf>>
-	where TSelf : PagingFilter<TSelf>, IPagingFilter
+/// <inheritdoc cref="CodeChops.Contracts.Paging.PagingFilter" />
+public record PagingFilter<TSource> : PagingFilter, IHasDefault<PagingFilter<TSource>>
 {
-	public static PagingFilter<TSelf> NoPaging { get; } = new(page: 0);
-	public static PagingFilter<TSelf> Default { get; } = new(page: 0, size: null);
-
+	public static PagingFilter<TSource> NoPaging { get; } = new(page: 0);
+	public static PagingFilter<TSource> Default { get; } = new(page: 0, size: null);
+	
 	/// <summary>
 	/// Get paging without page limit.
 	/// </summary>
@@ -14,19 +13,28 @@ public record PagingFilter<TSelf> : PagingFilter, IHasDefault<PagingFilter<TSelf
 		: base(page, null)
 	{
 	}
-	
-	/// <param name="page">0-based.</param>
-	/// <param name="size">When not provided, it will take <see cref="IPagingFilter.DefaultSize"/> as value.</param>
-	// ReSharper disable VirtualMemberCallInConstructor
-	public PagingFilter(int page, int? size)
-		: base(page, size ?? TSelf.DefaultSize)
+
+	protected PagingFilter(int page, int? size) 
+		: base(page, size)
 	{
+	}
+
+	/// <summary>
+	/// Applies paging to the queryable source. <see cref="PagingFilter.Page"/> is 0-based.
+	/// </summary>
+	public IQueryable<TSource> ApplyPaging(IQueryable<TSource> source)
+	{
+		if (this.Offset > 0)
+			source = source.Skip(this.Offset);
+		
+		if (this.Size is not null)
+			source = source.Take(this.Size.Value);
+
+		return source;
 	}
 }
 
-/// <summary>
-/// For filtering out a page of a collection. 
-/// </summary>
+/// <inheritdoc cref="IPagingFilter{TSource}"/>
 public abstract record PagingFilter
 {
 	/// <summary>
