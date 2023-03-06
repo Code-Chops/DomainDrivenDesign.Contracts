@@ -1,30 +1,49 @@
 ﻿namespace CodeChops.Contracts.Paging;
 
+/// <inheritdoc cref="PagingFilter"/>
+public record PagingFilter<TSelf> : PagingFilter, IHasDefault<PagingFilter<TSelf>>
+	where TSelf : PagingFilter<TSelf>, IPagingFilter
+{
+	public static PagingFilter<TSelf> NoPaging { get; } = new(page: 0);
+	public static PagingFilter<TSelf> Default { get; } = new(page: 0, size: null);
+
+	/// <summary>
+	/// Get paging without page limit.
+	/// </summary>
+	private PagingFilter(int page)
+		: base(page, null)
+	{
+	}
+	
+	/// <param name="page">0-based.</param>
+	/// <param name="size">When not provided, it will take <see cref="IPagingFilter.DefaultSize"/> as value.</param>
+	// ReSharper disable VirtualMemberCallInConstructor
+	public PagingFilter(int page, int? size)
+		: base(page, size ?? TSelf.DefaultSize)
+	{
+	}
+}
+
 /// <summary>
-/// For filtering out one page of a collection. 
+/// For filtering out a page of a collection. 
 /// </summary>
-public record PagingFilter
+public abstract record PagingFilter
 {
 	/// <summary>
 	/// The page number (starting with page 0).
 	/// </summary>
-	public int Page { get; }
+	public int Page { get; } 
 	
 	/// <summary>
-	/// The page size.
+	/// The page size. Null means no size limit.
 	/// </summary>
-	public int Size { get; }
+	public int? Size { get; }
+
+	public int Offset => this.Page * (this.Size ?? 0);
 	
-	protected virtual int MaximumSize => 1000;
-	protected virtual int DefaultSize => 20;
-	
-	// ReSharper disable VirtualMemberCallInConstructor
-	public PagingFilter(int page, int? size = null)
+	protected PagingFilter(int page, int? size)
 	{
 		this.Page = page;
-		this.Size = size ?? this.DefaultSize;
-
-		if (this.Size <= 0) this.Size = 1;
-		if (this.Size > this.MaximumSize) this.Size = this.MaximumSize;
+		this.Size = size;
 	}
 }
