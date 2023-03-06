@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <VersionPrefix>0.18.0</VersionPrefix>
-        <PackageReleaseNotes>Made adapters less strict (not requiring to be a domain model). Updated packages.</PackageReleaseNotes>
+        <VersionPrefix>0.19.0</VersionPrefix>
+        <PackageReleaseNotes>Added PagingFilter.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.Contracts</Title>
         <Description>Easy use of contracts, adapters and polymorphism, using JSON.</Description>

@@ -3,11 +3,11 @@
 public record PagedCollectionContract<TElementContract> : CollectionContract<TElementContract>
 	where TElementContract : Contract
 {
-	public PageContract Page { get; }
+	public PagingContract Paging { get; }
 
-	public PagedCollectionContract(IReadOnlyList<TElementContract> values, PageContract page)
+	public PagedCollectionContract(IReadOnlyList<TElementContract> values, PagingContract paging)
 		: base(values)
 	{
-		this.Page = page;
+		this.Paging = paging;
 	}
 }

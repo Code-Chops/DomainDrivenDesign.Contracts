@@ -53,7 +53,7 @@ public class RequestExceptionHandler
 	
 	private async Task HandleValidationExceptionAsync(ValidationException exception)
 	{
-		this.Logger.LogInformation(exception as Exception, "The request was invalid: {Message}", exception.Message);
+		this.Logger.LogInformation(exception, "The request was invalid: {Message}", exception.Message);
 
 		// Respond with the rejection if possible
 		var httpContext = this.HttpContextAccessor.HttpContext;
