@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <VersionPrefix>0.17.1</VersionPrefix>
-        <PackageReleaseNotes>Added documentation placeholder.</PackageReleaseNotes>
+        <VersionPrefix>0.17.2</VersionPrefix>
+        <PackageReleaseNotes>Fixed documentation, license, and icon location.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.Contracts</Title>
         <Description>Easy use of contracts, adapters and polymorphism, using JSON.</Description>
@@ -45,8 +45,9 @@
     </Target>
 
     <ItemGroup Label="PackageAssets">
-        <None Include="Properties\LICENSE" Pack="true" PackagePath="" />
-        <None Include="Properties\icon.png" Pack="true" Visible="true" PackagePath="" />
+        <None Include="..\LICENSE" Pack="true" PackagePath="" />
+        <None Include="..\icon.png" Pack="true" Visible="true" PackagePath="" />
+        <None Include="..\README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
     <ItemGroup Label="InternalsVisibleTo">
