@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <VersionPrefix>0.17.2</VersionPrefix>
-        <PackageReleaseNotes>Fixed documentation, license, and icon location.</PackageReleaseNotes>
+        <VersionPrefix>0.18.0</VersionPrefix>
+        <PackageReleaseNotes>Made adapters less strict (not requiring to be a domain model). Updated packages.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.Contracts</Title>
         <Description>Easy use of contracts, adapters and polymorphism, using JSON.</Description>
@@ -56,8 +56,8 @@
     </ItemGroup>
 
     <ItemGroup Label="PackageReferences">
-        <PackageReference Include="CodeChops.DomainModeling" Version="2.9.1" />
-        <PackageReference Include="CodeChops.ImplementationDiscovery" Version="1.8.2" />
+        <PackageReference Include="CodeChops.DomainModeling" Version="2.10.0" />
+        <PackageReference Include="CodeChops.ImplementationDiscovery" Version="1.8.3" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.Abstractions" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />

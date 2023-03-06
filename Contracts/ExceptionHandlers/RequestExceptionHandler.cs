@@ -43,7 +43,7 @@ public class RequestExceptionHandler
 		// An aborted request is an acceptable reason for cancellation
 		else if (exception is OperationCanceledException opCanceledException && opCanceledException.CancellationToken == this.HttpContextAccessor.HttpContext?.RequestAborted)
 			this.Logger.LogInformation(exception, "The caller cancelled the request.");
-		else if (exception is IValidationException validationException)
+		else if (exception is ValidationException validationException)
 			await this.HandleValidationExceptionAsync(validationException);
 		else if (exception is not null)
 			this.Logger.LogError(exception, "The request handler has thrown an exception.");
@@ -51,7 +51,7 @@ public class RequestExceptionHandler
 
 	private static ValidationExceptionAdapter ValidationExceptionAdapter { get; } = new();
 	
-	private async Task HandleValidationExceptionAsync(IValidationException exception)
+	private async Task HandleValidationExceptionAsync(ValidationException exception)
 	{
 		this.Logger.LogInformation(exception as Exception, "The request was invalid: {Message}", exception.Message);
 
@@ -61,7 +61,7 @@ public class RequestExceptionHandler
 		{
 			httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 
-			var exceptionContract = ValidationExceptionAdapter.ConvertDomainObjectToContract(exception);
+			var exceptionContract = ValidationExceptionAdapter.ConvertObjectToContract(exception);
 			
 			var json = JsonSerializer.SerializeToUtf8Bytes(exceptionContract, this.JsonSerializerOptions);
 

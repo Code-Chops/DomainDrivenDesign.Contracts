@@ -7,7 +7,7 @@ namespace CodeChops.Contracts.Converters;
 /// This contract to domain converter can convert domain objects to JSON (et vice versa).
 /// Uses an injected <see cref="PolymorphicJsonConverter"/> and <see cref="Adapter{TPolymorphicContract}"/>(s).
 /// </summary>
-public sealed class AdaptingJsonConverter : JsonConverter<IDomainObject>
+public sealed class AdaptingJsonConverter : JsonConverter<object>
 {
 	private PolymorphicJsonConverter PolymorphicJsonConverter { get; }
 	private ImmutableDictionary<string, Adapter> AdaptersByDomainObjectName { get; }
@@ -27,11 +27,11 @@ public sealed class AdaptingJsonConverter : JsonConverter<IDomainObject>
 		
 		this.PolymorphicJsonConverter = new PolymorphicJsonConverter(polymorphicContracts);
 		
-		this.AdaptersByDomainObjectName = adapterList.ToImmutableDictionary(adapter => adapter.DomainObjectName ?? throw new Exception($"Contract type on {adapter.GetType().Name} is null."));
+		this.AdaptersByDomainObjectName = adapterList.ToImmutableDictionary(adapter => adapter.ObjectName ?? throw new Exception($"Contract type on {adapter.GetType().Name} is null."));
 		this.AdaptersByDomainObjectType = adapterList.ToImmutableDictionary(adapter => adapter.GetDomainObjectType() ?? throw new Exception($"Domain object type on {adapter.GetType().Name} is null."));
 	}
 
-	public override IDomainObject Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+	public override object Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 	{
 		var contract = GetContract(ref reader);
 		var contractType = contract.GetType();
@@ -39,7 +39,7 @@ public sealed class AdaptingJsonConverter : JsonConverter<IDomainObject>
 		if (!this.AdaptersByDomainObjectName.TryGetValue(contractType.Name, out var adapter)) throw new KeyNotFoundException($"No injected {nameof(Adapter)} found for {contractType.Name} in {nameof(AdaptingJsonConverter)}.");
 		
 		// Convert it to a domain object using the correct adapter.
-		var domainObject = adapter.ConvertContractToDomainObject(contract);
+		var domainObject = adapter.ConvertContractToObject(contract);
 		return domainObject;
 
 
@@ -57,11 +57,11 @@ public sealed class AdaptingJsonConverter : JsonConverter<IDomainObject>
 		}
 	}
 
-	public override void Write(Utf8JsonWriter writer, IDomainObject domainObject, JsonSerializerOptions options)
+	public override void Write(Utf8JsonWriter writer, object domainObject, JsonSerializerOptions options)
 	{
 		var domainObjectType = domainObject.GetType();
 		if (!this.AdaptersByDomainObjectType.TryGetValue(domainObjectType, out var adapter)) throw new KeyNotFoundException($"No injected {nameof(Adapter)} found for {domainObjectType.Name} in {nameof(AdaptingJsonConverter)}.");
-		var contract = adapter.ConvertDomainObjectToContract(domainObject);
+		var contract = adapter.ConvertObjectToContract(domainObject);
 
 		JsonSerializer.Serialize(writer, contract, contract.GetType(), options);
 	}

@@ -2,9 +2,9 @@
 
 public record UserAdapterMock : Adapter<UserEntityMock, UserContractMock>
 {
-	protected internal override UserContractMock ConvertDomainObjectToContract(IDomainObject domainObject)
+	protected internal override UserContractMock ConvertObjectToContract(object domainObject)
 		=> new(((UserEntityMock)domainObject).Name);
 
-	protected internal override UserEntityMock ConvertContractToDomainObject(Contract contract)
+	protected internal override UserEntityMock ConvertContractToObject(Contract contract)
 		=> new(((UserContractMock)contract).Name);
 }

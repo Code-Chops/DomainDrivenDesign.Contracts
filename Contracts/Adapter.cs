@@ -3,14 +3,13 @@
 /// <summary>
 /// Provides a way to convert a domain object to a contract and vice versa, using a domain object with a type discriminator.
 /// </summary>
-public abstract record Adapter<TDomainObject, TContract> : Adapter<TContract>
-	where TDomainObject : IDomainObject
+public abstract record Adapter<TObject, TContract> : Adapter<TContract> 
 	where TContract : Contract
 {
 	/// <summary>
 	/// The contract is tightly coupled to 1 domain object type.
 	/// </summary>
-	protected internal override Type GetDomainObjectType() => typeof(TDomainObject);
+	protected internal override Type GetDomainObjectType() => typeof(TObject);
 }
 
 /// <summary>
@@ -19,11 +18,11 @@ public abstract record Adapter<TDomainObject, TContract> : Adapter<TContract>
 public abstract record Adapter<TContract> : Adapter 
 	where TContract : Contract
 {
-	public override string DomainObjectName { get; } = typeof(TContract).Name;
+	public override string ObjectName { get; } = typeof(TContract).Name;
 
 	protected internal override Type GetContractType() => typeof(TContract);
 	
-	protected internal abstract override TContract ConvertDomainObjectToContract(IDomainObject domainObject);
+	protected internal abstract override TContract ConvertObjectToContract(object o);
 }
 
 /// <summary>
@@ -31,9 +30,9 @@ public abstract record Adapter<TContract> : Adapter
 /// </summary>
 public abstract record Adapter
 {
-	public override string ToString() => $"{this.GetType().Name} {{ {nameof(this.DomainObjectName)} = {this.DomainObjectName} }}";
+	public override string ToString() => $"{this.GetType().Name} {{ {nameof(this.ObjectName)} = {this.ObjectName} }}";
 	
-	public abstract string DomainObjectName { get; }
+	public abstract string ObjectName { get; }
 
 	/// <summary>
 	/// Used by the converter for retrieving the correct adapter in order to convert the domain object to a contract.
@@ -45,6 +44,6 @@ public abstract record Adapter
 	/// </summary>
 	protected internal abstract Type GetContractType();
 	
-	protected internal abstract Contract ConvertDomainObjectToContract(IDomainObject domainObject);
-	protected internal abstract IDomainObject ConvertContractToDomainObject(Contract contract);
+	protected internal abstract Contract ConvertObjectToContract(object o);
+	protected internal abstract object ConvertContractToObject(Contract contract);
 }
