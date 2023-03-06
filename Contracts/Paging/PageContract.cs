@@ -1,10 +1,10 @@
-﻿namespace CodeChops.Contracts;
+﻿namespace CodeChops.Contracts.Paging;
 
 /// <summary>
-/// A paging contract with a default (maximum page) size that can be overriden.
+/// The contract of a page with a default (maximum page) size that can be overriden.
 /// </summary>
 // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
-public record PagingContract : Contract
+public record PageContract : Contract
 {
 	[JsonIgnore] public virtual uint MaximumSize => 1000;
 	[JsonIgnore] public virtual uint DefaultSize => 20;
@@ -21,7 +21,7 @@ public record PagingContract : Contract
 
 	[JsonConstructor]
 	// ReSharper disable VirtualMemberCallInConstructor
-	public PagingContract(uint page, uint? size)
+	public PageContract(uint page, uint? size)
 	{
 		this.Page = page;
 		this.Size = size ?? this.DefaultSize;

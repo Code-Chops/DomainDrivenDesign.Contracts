@@ -7,14 +7,11 @@ public record CollectionContract<TElementContract> : Contract, IReadOnlyList<TEl
 {
 	public IReadOnlyList<TElementContract> Values { get; }
 
-	public PagingContract Paging { get; }
-	
 	public int Count => this.Values.Count;
 
-	public CollectionContract(IReadOnlyList<TElementContract> values, PagingContract paging)
+	public CollectionContract(IReadOnlyList<TElementContract> values)
 	{
 		this.Values = values;
-		this.Paging = paging;
 	}
 
 	public virtual TElementContract this[int index] 
