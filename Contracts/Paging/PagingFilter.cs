@@ -1,20 +1,10 @@
 ﻿namespace CodeChops.Contracts.Paging;
 
 /// <inheritdoc cref="CodeChops.Contracts.Paging.PagingFilter" />
-public record PagingFilter<TSource> : PagingFilter, IHasDefault<PagingFilter<TSource>>
+public record PagingFilter<TSource> : PagingFilter, IPagingFilter<TSource>
 {
-	public static PagingFilter<TSource> NoPaging { get; } = new(page: 0);
-	public static PagingFilter<TSource> Default { get; } = new(page: 0, size: null);
-	
-	/// <summary>
-	/// Get paging without page limit.
-	/// </summary>
-	private PagingFilter(int page)
-		: base(page, null)
-	{
-	}
-
-	protected PagingFilter(int page, int? size) 
+	/// <param name="size">A page size of NULL means no page size limit.</param>
+	public PagingFilter(int page, int? size) 
 		: base(page, size)
 	{
 	}
