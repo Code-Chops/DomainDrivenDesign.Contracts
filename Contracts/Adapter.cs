@@ -21,8 +21,7 @@ public abstract record Adapter<TContract> : Adapter
 	public override string ObjectName { get; } = typeof(TContract).Name;
 
 	protected internal override Type GetContractType() => typeof(TContract);
-	
-	protected internal abstract override TContract ConvertObjectToContract(object o);
+	public abstract override TContract ConvertObjectToContract(object o);
 }
 
 /// <summary>
@@ -44,6 +43,6 @@ public abstract record Adapter
 	/// </summary>
 	protected internal abstract Type GetContractType();
 	
-	protected internal abstract Contract ConvertObjectToContract(object o);
-	protected internal abstract object ConvertContractToObject(Contract contract);
+	public abstract Contract ConvertObjectToContract(object o);
+	public abstract object ConvertContractToObject(Contract contract);
 }
