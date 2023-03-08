@@ -61,7 +61,7 @@ public class RequestExceptionHandler
 		{
 			httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 
-			var exceptionContract = ValidationExceptionAdapter.ConvertObjectToContract(exception);
+			var exceptionContract = ValidationExceptionAdapter.ConvertToContract(exception);
 			
 			var json = JsonSerializer.SerializeToUtf8Bytes(exceptionContract, this.JsonSerializerOptions);
 

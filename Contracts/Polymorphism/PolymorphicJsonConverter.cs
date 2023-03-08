@@ -1,11 +1,7 @@
 ﻿namespace CodeChops.Contracts.Polymorphism;
 
 /// <summary>
-/// This polymorphic domain converter can convert:
-/// <list type="bullet">
-/// <item>Domain object(s) to contract(s) (et vice versa): 1 to 1, many to 1. Using a <see cref="Adapter{TPolymorphicContract}"/>.</item>
-/// <item>Domain objects to JSON directly (et vice versa). Using a <see cref="Adapter{TPolymorphicContract}"/>.</item>
-/// </list>
+/// A polymorphic JSON converter.
 /// </summary>
 public class PolymorphicJsonConverter : JsonConverter<PolymorphicContract>
 {
@@ -51,7 +47,9 @@ public class PolymorphicJsonConverter : JsonConverter<PolymorphicContract>
 
 		// Deserialize it.
 		var value = JsonSerializer.Deserialize(ref readerAtStart, contract.GetType(), options);
-		if (value is null) throw new JsonException($"Error during deserialization of {typeToConvert.Name} using {nameof(PolymorphicJsonConverter)}.");
+		
+		if (value is null) 
+			throw new JsonException($"Error during deserialization of {typeToConvert.Name} using {nameof(PolymorphicJsonConverter)}.");
 				
 		return (PolymorphicContract)value;
 	}

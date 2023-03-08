@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <VersionPrefix>0.21.2</VersionPrefix>
-        <PackageReleaseNotes>Made adapter methods public.</PackageReleaseNotes>
+        <VersionPrefix>0.22.0</VersionPrefix>
+        <PackageReleaseNotes>Simplified adapters.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.Contracts</Title>
         <Description>Easy use of contracts, adapters and polymorphism, using JSON.</Description>
