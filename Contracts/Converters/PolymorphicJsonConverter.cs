@@ -1,4 +1,4 @@
-﻿namespace CodeChops.Contracts.Polymorphism;
+﻿namespace CodeChops.Contracts.Converters;
 
 /// <summary>
 /// A polymorphic JSON converter.

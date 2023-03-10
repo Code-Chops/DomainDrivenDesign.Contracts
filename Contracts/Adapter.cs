@@ -1,8 +1,8 @@
 ﻿namespace CodeChops.Contracts;
 
 /// <inheritdoc cref="Adapter"/>
-public abstract record Adapter<TObject, TContract> : Adapter, IAdapter<TObject, TContract>
-	where TObject : notnull
+public abstract record Adapter<TObject, TContract> : Adapter
+	where TObject : class
 	where TContract : Contract
 {
 	public override string ContractName { get; } = typeof(TContract).Name;
@@ -11,16 +11,18 @@ public abstract record Adapter<TObject, TContract> : Adapter, IAdapter<TObject, 
 	public override Type ObjectType => typeof(TObject);
 
 	public abstract TContract ConvertToContract(TObject @object);
-	public sealed override Contract ConvertToContract(object @object)
-		=> this.ConvertToContract((TObject)@object);
+	protected internal sealed override Contract ConvertToContract(object @object)
+		=> this.ConvertToContract(@object as TObject ?? NotNullGuard<TObject>.ThrowException<TObject>(this.GetType().Name, typeof(TObject).Name, errorCode: null));
 	
 	public abstract TObject ConvertToObject(TContract contract);
-	public sealed override object ConvertToObject(Contract contract)
-		=> this.ConvertToObject((TContract)contract);
+	protected internal sealed override object ConvertToObject(Contract contract)
+		=> this.ConvertToObject(contract as TContract ?? NotNullGuard<TContract>.ThrowException<TContract>(this.GetType().Name, typeof(TContract).Name, errorCode: null));
 }
 
-/// <inheritdoc />
-public abstract record Adapter : IAdapter
+/// <summary>
+/// Provides a way to convert an object to a contract and vice versa.
+/// </summary>
+public abstract record Adapter
 {
 	public override string ToString() => $"{this.GetType().Name} {{ {nameof(this.ContractName)} = {this.ContractName} }}";
 
@@ -28,7 +30,7 @@ public abstract record Adapter : IAdapter
 	public abstract Type ContractType { get; }
 	public abstract Type ObjectType { get; }
 
-	public abstract Contract ConvertToContract(object @object);
-	public abstract object ConvertToObject(Contract contract);
+	protected internal abstract Contract ConvertToContract(object @object);
+	protected internal abstract object ConvertToObject(Contract contract);
 }
 

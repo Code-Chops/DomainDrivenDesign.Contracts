@@ -1,4 +1,4 @@
-using CodeChops.Contracts.Polymorphism;
+using CodeChops.Contracts.Converters;
 using CodeChops.MagicEnums.Json;
 
 namespace CodeChops.Contracts.UnitTests.Polymorphism;

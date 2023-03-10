@@ -1,5 +1,4 @@
 ﻿using System.Runtime.Serialization;
-using CodeChops.Contracts.Polymorphism;
 
 namespace CodeChops.Contracts.Converters;
 
@@ -10,16 +9,16 @@ namespace CodeChops.Contracts.Converters;
 public sealed class AdaptingJsonConverter : JsonConverter<object>
 {
 	private PolymorphicJsonConverter PolymorphicJsonConverter { get; }
-	private ImmutableDictionary<string, IAdapter> AdaptersByDomainObjectName { get; }
-	private ImmutableDictionary<Type, IAdapter> AdaptersByDomainObjectType { get; }
+	private ImmutableDictionary<string, Adapter> AdaptersByDomainObjectName { get; }
+	private ImmutableDictionary<Type, Adapter> AdaptersByDomainObjectType { get; }
 
 	public override bool CanConvert(Type typeToConvert) 
 		=> !typeToConvert.IsAbstract && typeToConvert.IsAssignableTo(typeof(IDomainObject));
 
-	public AdaptingJsonConverter(IEnumerable<IAdapter>? adapters = null)
+	public AdaptingJsonConverter(IEnumerable<Adapter>? adapters = null)
 	{
-		adapters ??= Array.Empty<IAdapter>();
-		var adapterList = adapters as List<IAdapter> ?? adapters.ToList();
+		adapters ??= Array.Empty<Adapter>();
+		var adapterList = adapters as List<Adapter> ?? adapters.ToList();
 
 		var polymorphicContracts = adapterList
 			.Select(adapter => FormatterServices.GetUninitializedObject(adapter.ContractType))
@@ -37,7 +36,7 @@ public sealed class AdaptingJsonConverter : JsonConverter<object>
 		var contractType = contract.GetType();
 		
 		if (!this.AdaptersByDomainObjectName.TryGetValue(contractType.Name, out var adapter)) 
-			throw new KeyNotFoundException($"No injected implementation of {nameof(IAdapter)} found for {contractType.Name} in {nameof(AdaptingJsonConverter)}.");
+			throw new KeyNotFoundException($"No injected implementation of {nameof(Adapter)} found for {contractType.Name} in {nameof(AdaptingJsonConverter)}.");
 		
 		// Convert it to a domain object using the correct adapter.
 		var domainObject = adapter.ConvertToObject(contract);
@@ -67,7 +66,7 @@ public sealed class AdaptingJsonConverter : JsonConverter<object>
 		var domainObjectType = domainObject.GetType();
 		
 		if (!this.AdaptersByDomainObjectType.TryGetValue(domainObjectType, out var adapter)) 
-			throw new KeyNotFoundException($"No injected implementation of {nameof(IAdapter)} found for {domainObjectType.Name} in {nameof(AdaptingJsonConverter)}.");
+			throw new KeyNotFoundException($"No injected implementation of {nameof(Adapter)} found for {domainObjectType.Name} in {nameof(AdaptingJsonConverter)}.");
 		
 		var contract = adapter.ConvertToContract(domainObject);
 
