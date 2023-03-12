@@ -1,4 +1,6 @@
-﻿namespace CodeChops.Contracts.Paging;
+﻿using System.Linq.Expressions;
+
+namespace CodeChops.Contracts.Paging;
 
 /// <inheritdoc cref="CodeChops.Contracts.Paging.PagingFilter" />
 public record PagingFilter<TSource> : PagingFilter, IPagingFilter<TSource>
@@ -12,7 +14,7 @@ public record PagingFilter<TSource> : PagingFilter, IPagingFilter<TSource>
 	/// <summary>
 	/// Applies paging to the queryable source. <see cref="PagingFilter.Page"/> is 0-based.
 	/// </summary>
-	public IQueryable<TSource> ApplyPaging(IQueryable<TSource> source)
+	public IOrderedQueryable<TSource> ApplyPaging<TKey>(IQueryable<TSource> source, Expression<Func<TSource, TKey>> orderBy)
 	{
 		if (this.Offset > 0)
 			source = source.Skip(this.Offset);
@@ -20,7 +22,7 @@ public record PagingFilter<TSource> : PagingFilter, IPagingFilter<TSource>
 		if (this.Size is not null)
 			source = source.Take(this.Size.Value);
 
-		return source;
+		return source.OrderBy(orderBy);
 	}
 }
 

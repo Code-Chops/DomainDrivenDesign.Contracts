@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <VersionPrefix>0.24.0</VersionPrefix>
-        <PackageReleaseNotes>Changed adapters and paging.</PackageReleaseNotes>
+        <VersionPrefix>0.25.0</VersionPrefix>
+        <PackageReleaseNotes>Added ordered paging.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.Contracts</Title>
         <Description>Easy use of contracts, adapters and polymorphism, using JSON.</Description>
