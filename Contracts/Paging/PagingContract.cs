@@ -1,4 +1,6 @@
-﻿namespace CodeChops.Contracts.Paging;
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace CodeChops.Contracts.Paging;
 
 /// <summary>
 /// The contract of a page with a default (maximum page) size that can be overriden.
@@ -9,24 +11,28 @@ public record PagingContract : Contract
 	/// <summary>
 	/// The page number (starting with page 0).
 	/// </summary>
-	public int Page { get; }
+	[FromQuery(Name = "page")]
+	public int Page { get; init; }
 	
 	/// <summary>
 	/// The page size.
 	/// </summary>
-	public int Size { get; }
+	[FromQuery(Name = "size")]
+	public int Size { get; init; }
 	
 	protected virtual int MaximumSize => 1000;
 	protected virtual int DefaultSize => 20;
 	
-	[JsonConstructor]
 	// ReSharper disable VirtualMemberCallInConstructor
-	public PagingContract(int page, int? size = null)
+	public PagingContract()
 	{
-		this.Page = page;
-		this.Size = size ?? this.DefaultSize;
+		if (this.Page < 0)
+			this.Page = 0;
+		
+		if (this.Size <= 0)
+			this.Size = this.DefaultSize;
 
-		if (this.Size <= 0) this.Size = 1;
-		if (this.Size > this.MaximumSize) this.Size = this.MaximumSize;
+		if (this.Size > this.MaximumSize) 
+			this.Size = this.MaximumSize;
 	}
 }

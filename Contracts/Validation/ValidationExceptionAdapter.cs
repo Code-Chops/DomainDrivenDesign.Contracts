@@ -1,4 +1,6 @@
-﻿namespace CodeChops.Contracts.Validation;
+﻿using CodeChops.Contracts.Adapters;
+
+namespace CodeChops.Contracts.Validation;
 
 public sealed record ValidationExceptionAdapter : Adapter<ValidationException, ValidationExceptionContract>
 {

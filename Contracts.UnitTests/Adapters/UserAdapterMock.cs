@@ -1,4 +1,6 @@
-﻿namespace CodeChops.Contracts.UnitTests.Adapters;
+﻿using CodeChops.Contracts.Adapters;
+
+namespace CodeChops.Contracts.UnitTests.Adapters;
 
 public record UserAdapterMock : Adapter<UserEntityMock, UserContractMock>
 {

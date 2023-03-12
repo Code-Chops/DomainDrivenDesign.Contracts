@@ -1,18 +1,14 @@
 ﻿using System.Collections;
+using CodeChops.Contracts.Paging;
 
 namespace CodeChops.Contracts;
 
-public record CollectionContract<TElementContract> : Contract, IReadOnlyList<TElementContract>
+public record CollectionContract<TElementContract> : PagingContract, IReadOnlyList<TElementContract>
 	where TElementContract : Contract
 {
-	public IReadOnlyList<TElementContract> Values { get; }
+	public required IReadOnlyList<TElementContract> Values { get; init; }
 
 	public int Count => this.Values.Count;
-
-	public CollectionContract(IReadOnlyList<TElementContract> values)
-	{
-		this.Values = values;
-	}
 
 	public virtual TElementContract this[int index] 
 		=> Validator.Get<TElementContract>.Default.GuardIndexInRange(this.Values, index, errorCode: null)!;
