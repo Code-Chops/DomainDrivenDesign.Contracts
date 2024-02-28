@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using CodeChops.Contracts.Adapters;
 
 namespace CodeChops.Contracts.Converters;
@@ -13,7 +14,7 @@ public sealed class AdaptingJsonConverter : JsonConverter<object>
 	private ImmutableDictionary<string, IBidirectionalAdapter> AdaptersByDomainObjectName { get; }
 	private ImmutableDictionary<Type, IBidirectionalAdapter> AdaptersByDomainObjectType { get; }
 
-	public override bool CanConvert(Type typeToConvert) 
+	public override bool CanConvert(Type typeToConvert)
 		=> !typeToConvert.IsAbstract && typeToConvert.IsAssignableTo(typeof(IDomainObject));
 
 	public AdaptingJsonConverter(IEnumerable<IBidirectionalAdapter>? adapters = null)
@@ -22,11 +23,11 @@ public sealed class AdaptingJsonConverter : JsonConverter<object>
 		var adapterList = adapters as List<IBidirectionalAdapter> ?? adapters.ToList();
 
 		var polymorphicContracts = adapterList
-			.Select(adapter => FormatterServices.GetUninitializedObject(adapter.ContractType))
+			.Select(adapter => RuntimeHelpers.GetUninitializedObject(adapter.ContractType))
 			.OfType<PolymorphicContract>();
-		
+
 		this.PolymorphicJsonConverter = new PolymorphicJsonConverter(polymorphicContracts);
-		
+
 		this.AdaptersByDomainObjectName = adapterList.ToImmutableDictionary(adapter => adapter.ContractName ?? throw new Exception($"Contract type on {adapter.GetType().Name} is null."));
 		this.AdaptersByDomainObjectType = adapterList.ToImmutableDictionary(adapter => adapter.ObjectType ?? throw new Exception($"Object type on {adapter.GetType().Name} is null."));
 	}
@@ -35,10 +36,10 @@ public sealed class AdaptingJsonConverter : JsonConverter<object>
 	{
 		var contract = GetContract(ref reader);
 		var contractType = contract.GetType();
-		
-		if (!this.AdaptersByDomainObjectName.TryGetValue(contractType.Name, out var adapter)) 
+
+		if (!this.AdaptersByDomainObjectName.TryGetValue(contractType.Name, out var adapter))
 			throw new KeyNotFoundException($"No injected implementation of {nameof(IBidirectionalAdapter)} found for {contractType.Name} in {nameof(AdaptingJsonConverter)}.");
-		
+
 		// Convert it to a domain object using the correct adapter.
 		var domainObject = adapter.ConvertToObject(contract);
 		return domainObject;
@@ -48,16 +49,16 @@ public sealed class AdaptingJsonConverter : JsonConverter<object>
 		{
 			if (this.AdaptersByDomainObjectType.TryGetValue(typeToConvert, out var adapter))
 			{
-				var contract = JsonSerializer.Deserialize(ref reader, adapter.ContractType, options) 
+				var contract = JsonSerializer.Deserialize(ref reader, adapter.ContractType, options)
 					?? throw new JsonException("Error during retrieval of JSON value.");
-				
+
 				return (Contract)contract;
 			}
-		
+
 			// Deserialize it using the PolymorphicJsonConverter.
-			var polymorphicContract = this.PolymorphicJsonConverter.Read(ref reader, typeToConvert, options) 
+			var polymorphicContract = this.PolymorphicJsonConverter.Read(ref reader, typeToConvert, options)
 				?? throw new JsonException("Error during retrieval of polymorphic JSON value.");
-			
+
 			return polymorphicContract;
 		}
 	}
@@ -65,10 +66,10 @@ public sealed class AdaptingJsonConverter : JsonConverter<object>
 	public override void Write(Utf8JsonWriter writer, object domainObject, JsonSerializerOptions options)
 	{
 		var domainObjectType = domainObject.GetType();
-		
-		if (!this.AdaptersByDomainObjectType.TryGetValue(domainObjectType, out var adapter)) 
+
+		if (!this.AdaptersByDomainObjectType.TryGetValue(domainObjectType, out var adapter))
 			throw new KeyNotFoundException($"No injected implementation of {nameof(IBidirectionalAdapter)} found for {domainObjectType.Name} in {nameof(AdaptingJsonConverter)}.");
-		
+
 		var contract = adapter.ConvertToContract(domainObject);
 
 		JsonSerializer.Serialize(writer, contract, contract.GetType(), options);

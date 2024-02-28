@@ -3,14 +3,14 @@
     <PropertyGroup Label="Main">
         <AssemblyName>CodeChops.Contracts</AssemblyName>
         <RootNamespace>CodeChops.Contracts</RootNamespace>
-        <TargetFramework>net7.0</TargetFramework>
-        <LangVersion>11</LangVersion>
+        <TargetFramework>net8.0</TargetFramework>
+        <LangVersion>12</LangVersion>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <VersionPrefix>0.25.1</VersionPrefix>
+        <VersionPrefix>0.26.0</VersionPrefix>
         <PackageReleaseNotes>Updated packages.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.Contracts</Title>

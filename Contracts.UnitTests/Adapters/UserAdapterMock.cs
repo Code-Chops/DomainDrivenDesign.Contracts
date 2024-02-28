@@ -8,5 +8,5 @@ public record UserAdapterMock : Adapter<UserEntityMock, UserContractMock>
 		=> new(domainObject.Name);
 
 	public override UserEntityMock ConvertToObject(UserContractMock contract)
-		=> new(contract.Name);
+		=> new(contract.Name) { Id = new(1) };
 }

@@ -3,8 +3,8 @@
     <PropertyGroup Label="Main">
         <AssemblyName>CodeChops.Contracts.UnitTests</AssemblyName>
         <RootNamespace>CodeChops.Contracts.UnitTests</RootNamespace>
-        <TargetFramework>net7.0</TargetFramework>
-        <LangVersion>11</LangVersion>
+        <TargetFramework>net8.0</TargetFramework>
+        <LangVersion>12</LangVersion>
         <AnalysisLevel>latest</AnalysisLevel>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -13,7 +13,7 @@
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     </PropertyGroup>
-    
+
     <ItemGroup Label="ProjectReferences">
         <ProjectReference Include="..\Contracts\Contracts.csproj" />
     </ItemGroup>
@@ -21,7 +21,7 @@
     <ItemGroup Label="PackageReferences">
         <PackageReference Include="CodeChops.GenericMath" Version="3.3.3" />
         <PackageReference Include="CodeChops.Geometry" Version="4.9.0" />
-        <PackageReference Include="CodeChops.MagicEnums.Json" Version="3.8.3" />
+        <PackageReference Include="CodeChops.MagicEnums.Json" Version="3.9.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
         <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.5.0" />
         <PackageReference Include="xunit" Version="2.4.2" />
