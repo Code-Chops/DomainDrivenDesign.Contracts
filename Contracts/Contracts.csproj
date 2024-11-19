@@ -3,15 +3,15 @@
     <PropertyGroup Label="Main">
         <AssemblyName>CodeChops.Contracts</AssemblyName>
         <RootNamespace>CodeChops.Contracts</RootNamespace>
-        <TargetFramework>net8.0</TargetFramework>
-        <LangVersion>12</LangVersion>
+        <TargetFramework>net9.0</TargetFramework>
+        <LangVersion>13</LangVersion>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <VersionPrefix>0.26.1</VersionPrefix>
-        <PackageReleaseNotes>Updated to .NET 8.</PackageReleaseNotes>
+        <VersionPrefix>0.26.2</VersionPrefix>
+        <PackageReleaseNotes>Updated to .NET 9.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.Contracts</Title>
         <Description>Easy use of contracts, adapters and polymorphism, using JSON.</Description>
@@ -38,12 +38,7 @@
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     </PropertyGroup>
-
-    <!-- Creates local nuget packages if in release mode and environment variable LocalNuGetPackagesFolder is configured -->
-    <Target Name="AddNugetPackage" AfterTargets="Pack" Condition="'$(Configuration)' == 'Release' AND '$(LocalNuGetPackagesFolder)' != null">
-        <Exec Command="$(LocalNuGetPackagesFolder)\nuget.exe add $(OutputPath)..\$(PackageId).$(PackageVersion).nupkg -source $(LocalNuGetPackagesFolder)" />
-    </Target>
-
+    
     <ItemGroup Label="PackageAssets">
         <None Include="..\LICENSE" Pack="true" PackagePath="" />
         <None Include="..\icon.png" Pack="true" Visible="true" PackagePath="" />
@@ -56,13 +51,10 @@
     </ItemGroup>
 
     <ItemGroup Label="PackageReferences">
-        <PackageReference Include="CodeChops.DomainModeling" Version="2.16.0" />
-        <PackageReference Include="CodeChops.ImplementationDiscovery" Version="1.8.6" />
-        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.Abstractions" Version="2.2.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
-        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
+        <PackageReference Include="CodeChops.DomainModeling" Version="2.18.4" />
+        <PackageReference Include="CodeChops.ImplementationDiscovery" Version="1.8.8" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="9.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
     </ItemGroup>
 
     <ItemGroup>

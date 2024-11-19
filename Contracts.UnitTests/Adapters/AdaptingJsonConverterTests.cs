@@ -4,14 +4,14 @@ namespace CodeChops.Contracts.UnitTests.Adapters;
 
 public class AdaptingJsonConverterTests
 {
-	private static UserEntityMock Entity { get; } = new("Max") { Id = new(1) };
+	private static UserEntityMock Entity { get; } = new("Max", 1);
 	private const string Json = @$"{{""{nameof(UserContractMock.Name)}"":""Max""}}";
 	private static JsonSerializerOptions JsonSerializerOptions { get; } = new()
 	{
 		WriteIndented = false,
 		Converters =
 		{
-			new AdaptingJsonConverter(new[] { new UserAdapterMock() })
+			new AdaptingJsonConverter([new UserAdapterMock()])
 		}
 	};
 
